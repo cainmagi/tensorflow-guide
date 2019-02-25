@@ -84,7 +84,7 @@
   }
   ga.l = +new Date
   /* Setup integration and send page view */
-  ga("create", "None", "auto")
+  ga("create", "UA-119875813-2", "auto")
   ga("set", "anonymizeIp", true)
   ga("send", "pageview")
   /* Register handler to log search on blur */
@@ -429,6 +429,12 @@
       
       
       
+        <li class="md-nav__item">
+          <a href="#__comments" title="评论" class="md-nav__link md-nav__link--active">
+            评论
+          </a>
+        </li>
+      
     </ul>
   
 </nav>
@@ -519,6 +525,12 @@
       
       
       
+      
+        <li class="md-nav__item">
+          <a href="#__comments" title="评论" class="md-nav__link md-nav__link--active">
+            评论
+          </a>
+        </li>
       
     </ul>
   
@@ -645,6 +657,22 @@ SOFTWARE.</p>
               
                 
 
+
+  <h2 id="__comments">评论</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = "https://cainmagi.github.io/tensorflow-guide/licenses/";
+      this.page.identifier =
+        "licenses/";
+    };
+    (function() {
+      var d = document, s = d.createElement("script");
+      s.src = "//tensorflow-guide.disqus.com/embed.js";
+      s.setAttribute("data-timestamp", +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
 
               
             </article>
