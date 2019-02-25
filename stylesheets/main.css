@@ -1,0 +1,14 @@
+.md-typeset h1 {
+    font-weight: 700;
+    font-style: normal
+}
+
+.md-typeset h2 {
+    font-weight: 600;
+    font-style: normal
+}
+
+.md-header-nav__topic {
+    font-weight: 900;
+    font-style: normal
+}
