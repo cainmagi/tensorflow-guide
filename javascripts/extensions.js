@@ -1,4 +1,10 @@
+// SimpleLightBox
 $(document).ready(function() {
+    // Overflow scrollbox
+    $('div .overflow').each(function() { 
+        $(this).wrapInner('<div class="check" />'); 
+    });
+    // SimpleLightBox
     var productImageGroups = [];
     $('.img-fluid').each(function() { 
         var productImageSource = $(this).attr('src');
@@ -19,3 +25,33 @@ $(document).ready(function() {
         $(value).simpleLightbox();
     }
 });
+
+// Mermaid
+mermaid.initialize({
+  startOnLoad: true,
+  theme: 'neutral',
+  themeCSS: '.label { font-family: "Helvetica Neue", Helvetica, Arial, "Noto Serif SC", sans-serif; }'
+});
+
+// MathJax
+window.MathJax = {
+    tex2jax: {
+      inlineMath: [ ["\\(","\\)"] ],
+      displayMath: [ ["\\[","\\]"] ]
+    },
+    TeX: {
+      TagSide: "right",
+      TagIndent: ".8em",
+      MultLineWidth: "85%",
+      equationNumbers: {
+        autoNumber: "AMS",
+      },
+      extensions: ["boldsymbol.js", "color.js"],
+      unicode: {
+        fonts: "STIXGeneral,'Arial Unicode MS'"
+      }
+    },
+    displayAlign: "left",
+    showProcessingMessages: false,
+    messageStyle: "none"
+  };

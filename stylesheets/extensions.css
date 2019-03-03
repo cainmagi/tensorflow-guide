@@ -95,3 +95,74 @@ a.boxedThumb:hover {
 .md-typeset .admonition, .md-typeset details {
     font-size: .75rem
 }
+
+.mermaid {
+  text-align: center;
+}
+
+div .overflow {
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+div .overflow .check{
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  overflow: -moz-scrollbars-vertical;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.md-typeset .magiclink-repository.magiclink-github:before {
+  content: ""
+}
+.md-typeset .magiclink-repository.magiclink-gitlab:before {
+  content: ""
+}
+.md-typeset .magiclink-repository.magiclink-bitbucket:before{
+  content:""
+}
+.md-typeset .keys .key-backspace:before{
+  padding-left:.2rem;
+  content:"←"
+}
+.md-typeset .keys .key-command:before{
+  padding-left:.2rem;content:"⌘"
+}
+.md-typeset .keys .key-windows:before{
+  padding-left:.2rem;content:"⊞"
+}
+.md-typeset .keys .key-caps-lock:before{
+  padding-left:.2rem;content:"⇪"
+}
+.md-typeset .keys .key-control:before{
+  padding-left:.2rem;content:"⌃"
+}
+.md-typeset .keys .key-meta:before{
+  padding-left:.2rem;content:"◆"
+}
+.md-typeset .keys .key-shift:before{
+  padding-left:.2rem;content:"⇧"
+}
+.md-typeset .keys .key-option:before{
+  padding-left:.2rem;content:"⌥"
+}
+.md-typeset .keys .key-tab:after{
+  padding-left:.2rem;content:"↹"
+}
+.md-typeset .keys .key-num-enter:after{
+  padding-left:.2rem;content:"↵"
+}
+.md-typeset .keys .key-enter:after{
+  padding-left:.2rem;content:"↩"
+}
+.md-typeset .magiclink:before {
+  position: relative;
+  padding-right: .25rem;
+  font-family: FontAwesome;
+  -webkit-font-smoothing: initial
+}
