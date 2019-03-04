@@ -10,10 +10,10 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
-        <meta name="description" content="本文档的所有更新记录。">
+        <meta name="description" content="本章将从线性问题入手，讨论最简单的分类与回归问题。我们将随机生成指定分布的数据，通过理论值，检查实验效果。这些简单的、解析的问题，可以提供读者一个直观的感受，并帮助读者快速上手Tensorflow的基本概念与运用。本章中，我们不会涉及任何数据存取、跟踪测度方面的概念，也不会将训练和测试分开，旨在使读者能集中心思到代码规范和Tensorflow的基本功能上。">
       
       
-        <link rel="canonical" href="https://cainmagi.github.io/tensorflow-guide/release-notes/">
+        <link rel="canonical" href="https://cainmagi.github.io/tensorflow-guide/book-1-x/chapter-1/">
       
       
         <meta name="author" content="Yuchen Jin (cainmagi)">
@@ -37,18 +37,18 @@
       
         <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
       
-      <link rel="shortcut icon" href="../assets/images/icons/favicon.png">
+      <link rel="shortcut icon" href="../../assets/images/icons/favicon.png">
       <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.1">
     
     
       
-        <title>更新记录 - Tensorflow手札</title>
+        <title>从线性问题入门 - Tensorflow手札</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.982221ab.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.982221ab.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.224b79ff.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.224b79ff.css">
       
       
         
@@ -57,7 +57,7 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+      <script src="../../assets/javascripts/modernizr.1f0bcf2b.js"></script>
     
     
       
@@ -66,14 +66,14 @@
         <style>body,input{font-family:"Noto Serif SC","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
-    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../stylesheets/main.css">
+      <link rel="stylesheet" href="../../stylesheets/main.css">
     
-      <link rel="stylesheet" href="../stylesheets/extensions.css">
+      <link rel="stylesheet" href="../../stylesheets/extensions.css">
     
-      <link rel="stylesheet" href="../stylesheets/simpleLightbox.min.css">
+      <link rel="stylesheet" href="../../stylesheets/simpleLightbox.min.css">
     
     
       
@@ -150,7 +150,7 @@
       <div class="md-flex__cell md-flex__cell--shrink">
         <a href="https://cainmagi.github.io/tensorflow-guide/" title="Tensorflow手札" class="md-header-nav__button md-logo">
           
-            <img src="../assets/images/icons/Tensorflow.svg" width="24" height="24">
+            <img src="../../assets/images/icons/Tensorflow.svg" width="24" height="24">
           
         </a>
       </div>
@@ -164,7 +164,7 @@
               Tensorflow手札
             </span>
             <span class="md-header-nav__topic">
-              更新记录
+              本章总说
             </span>
           
         </div>
@@ -242,7 +242,7 @@
   
     <li class="md-tabs__item">
       
-        <a href=".." title="TF 1.x" class="md-tabs__link md-tabs__link--active">
+        <a href="../.." title="TF 1.x" class="md-tabs__link md-tabs__link--active">
           TF 1.x
         </a>
       
@@ -265,7 +265,7 @@
   <label class="md-nav__title md-nav__title--site" for="__drawer">
     <a href="https://cainmagi.github.io/tensorflow-guide/" title="Tensorflow手札" class="md-nav__button md-logo">
       
-        <img src="../assets/images/icons/Tensorflow.svg" width="48" height="48">
+        <img src="../../assets/images/icons/Tensorflow.svg" width="48" height="48">
       
     </a>
     Tensorflow手札
@@ -320,7 +320,7 @@
 
 
   <li class="md-nav__item">
-    <a href=".." title="扉页" class="md-nav__link">
+    <a href="../.." title="扉页" class="md-nav__link">
       扉页
     </a>
   </li>
@@ -330,10 +330,12 @@
           
           
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1-2" type="checkbox" id="nav-1-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1-2" type="checkbox" id="nav-1-2" checked>
     
     <label class="md-nav__link" for="nav-1-2">
       从线性问题入门
@@ -344,35 +346,6 @@
       </label>
       <ul class="md-nav__list" data-md-scrollfix>
         
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../book-1-x/chapter-1/" title="本章总说" class="md-nav__link">
-      本章总说
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../book-1-x/chapter-1/hello-world/" title="Hello world!" class="md-nav__link">
-      Hello world!
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
         
           
           
@@ -389,11 +362,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        更新记录
+        本章总说
       </label>
     
-    <a href="./" title="更新记录" class="md-nav__link md-nav__link--active">
-      更新记录
+    <a href="./" title="本章总说" class="md-nav__link md-nav__link--active">
+      本章总说
     </a>
     
       
@@ -407,63 +380,30 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" title="大版本更新" class="md-nav__link">
-    大版本更新
+  <a href="#_2" title="漫谈线性问题" class="md-nav__link">
+    漫谈线性问题
   </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#01-february-25-2019" title="0.1 @ February 25, 2019" class="md-nav__link">
-    0.1 @ February 25, 2019
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" title="局部更新记录" class="md-nav__link">
-    局部更新记录
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#015-march-4-2019" title="0.15 @ March 4, 2019" class="md-nav__link">
-    0.15 @ March 4, 2019
+  <a href="#_3" title="线性问题与凸问题" class="md-nav__link">
+    线性问题与凸问题
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#012-march-3-2019" title="0.12 @ March 3, 2019" class="md-nav__link">
-    0.12 @ March 3, 2019
+      
+        <li class="md-nav__item">
+  <a href="#tensorflow" title="知悉Tensorflow" class="md-nav__link">
+    知悉Tensorflow
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#011-february-25-2019" title="0.11 @ February 25, 2019" class="md-nav__link">
-    0.11 @ February 25, 2019
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="本章要点" class="md-nav__link">
+    本章要点
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#010-february-25-2019" title="0.10 @ February 25, 2019" class="md-nav__link">
-    0.10 @ February 25, 2019
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -490,7 +430,36 @@
 
 
   <li class="md-nav__item">
-    <a href="../licenses/" title="协议" class="md-nav__link">
+    <a href="hello-world/" title="Hello world!" class="md-nav__link">
+      Hello world!
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../release-notes/" title="更新记录" class="md-nav__link">
+      更新记录
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../licenses/" title="协议" class="md-nav__link">
       协议
     </a>
   </li>
@@ -522,63 +491,30 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" title="大版本更新" class="md-nav__link">
-    大版本更新
+  <a href="#_2" title="漫谈线性问题" class="md-nav__link">
+    漫谈线性问题
   </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#01-february-25-2019" title="0.1 @ February 25, 2019" class="md-nav__link">
-    0.1 @ February 25, 2019
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" title="局部更新记录" class="md-nav__link">
-    局部更新记录
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#015-march-4-2019" title="0.15 @ March 4, 2019" class="md-nav__link">
-    0.15 @ March 4, 2019
+  <a href="#_3" title="线性问题与凸问题" class="md-nav__link">
+    线性问题与凸问题
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#012-march-3-2019" title="0.12 @ March 3, 2019" class="md-nav__link">
-    0.12 @ March 3, 2019
+      
+        <li class="md-nav__item">
+  <a href="#tensorflow" title="知悉Tensorflow" class="md-nav__link">
+    知悉Tensorflow
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#011-february-25-2019" title="0.11 @ February 25, 2019" class="md-nav__link">
-    0.11 @ February 25, 2019
+      
+        <li class="md-nav__item">
+  <a href="#_4" title="本章要点" class="md-nav__link">
+    本章要点
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#010-february-25-2019" title="0.10 @ February 25, 2019" class="md-nav__link">
-    0.10 @ February 25, 2019
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -605,78 +541,70 @@
               
                 
                 
-                <h1 id="_1">更新记录<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h2 id="_2">大版本更新<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>在此记录本文档的主要更新，读者可以在此确认经过更新后，本文档添加了哪些主要的内容、话题。</p>
-<h3 id="01-february-25-2019">0.1 <small>@ February 25, 2019</small><a class="headerlink" href="#01-february-25-2019" title="Permanent link">&para;</a></h3>
-<p>正式立项，开始本文档的撰写工作。目前尚处于未完成状态，计划包括：</p>
-<ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Tensorflow 1.12 入门教程<ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 从线性问题入门
-    <div class="progress progress-20plus">
-<div class="progress-bar" style="width:20.00%">
-<p class="progress-label">20%</p>
+                <h1 id="_1">从线性问题入门<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">摘要</p>
+<p>本章将从线性问题入手，讨论最简单的分类与回归问题。我们将随机生成指定分布的数据，通过理论值，检查实验效果。这些简单的、解析的问题，可以提供读者一个直观的感受，并帮助读者快速上手Tensorflow的基本概念与运用。本章中，我们不会涉及任何数据存取、跟踪测度方面的概念，也不会将训练和测试分开，旨在使读者能集中心思到代码规范和Tensorflow的基本功能上。</p>
 </div>
-</div>
-</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 训练与测试分立
-    <div class="progress progress-0plus">
-<div class="progress-bar" style="width:0.00%">
-<p class="progress-label">0%</p>
-</div>
-</div>
-</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 原生的数据管理
-    <div class="progress progress-0plus">
-<div class="progress-bar" style="width:0.00%">
-<p class="progress-label">0%</p>
-</div>
-</div>
-</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 其他的高级技巧
-    <div class="progress progress-0plus">
-<div class="progress-bar" style="width:0.00%">
-<p class="progress-label">0%</p>
-</div>
-</div>
-</li>
-</ul>
-</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Tensorflow 2.0 入门教程
-    <div class="progress progress-0plus">
-<div class="progress-bar" style="width:0.00%">
-<p class="progress-label">0%</p>
-</div>
-</div>
-</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Tensorflow 第三方扩展库 入门教程
-    <div class="progress progress-0plus">
-<div class="progress-bar" style="width:0.00%">
-<p class="progress-label">0%</p>
-</div>
-</div>
-</li>
-</ul>
-<h2 id="_3">局部更新记录<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<h3 id="015-march-4-2019">0.15 <small>@ March 4, 2019</small><a class="headerlink" href="#015-march-4-2019" title="Permanent link">&para;</a></h3>
+<h2 id="_2">漫谈线性问题<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>在机器学习领域，线性问题既简单也不简单。目前神经网络主要是指多层、非凸的网络结构，常常用来解复杂的、难以推导的问题。但这并不意味着线性问题容易解决。相反，在很多情况下，线性问题是解不唯一的(undetermined)，解不稳定的(ill-posed/ill-conditioned)，条件的(constrained)。同时，为了得到一个快速收敛的、高质量的解，即使对线性问题，人们也在不断提出、改进解法。例如ISTA, AMP, PGD, LISTA, vAMP等算法，都用来解线性问题。在此不作详细展开。</p>
+<p>我们已经知道，一个线性函数具有可加性，和一次齐次性，亦即</p>
+<div class="overflow">\begin{align}
+    f(x_1 + x_2) &amp;= f(x_1) + f(x_2), \\
+    f(\alpha x) &amp;= \alpha f(x).
+\end{align}</div>
+
+<p>因此，求解一个线性问题，我们需要将问题纯粹以<span></span><strong>线性函数</strong><span></span>进行描述。例如，</p>
+<div class="overflow">\begin{align}
+    \mathbf{y} \sim \mathbf{A}\mathbf{x}.
+\end{align}</div>
+
+<p>具体而言，<span><span class="MathJax_Preview">\mathbf{x}</span><script type="math/tex">\mathbf{x}</script></span>是我们的已知数据，<span><span class="MathJax_Preview">\mathbf{y}</span><script type="math/tex">\mathbf{y}</script></span>是我们的未知量，我们需要找到一个合适的<span><span class="MathJax_Preview">\mathbf{A}</span><script type="math/tex">\mathbf{A}</script></span>来确保<span><span class="MathJax_Preview">\mathbf{x}</span><script type="math/tex">\mathbf{x}</script></span>能拟合到<span><span class="MathJax_Preview">\mathbf{y}</span><script type="math/tex">\mathbf{y}</script></span>。如果此处<span><span class="MathJax_Preview">\mathbf{y} \in \{0,~1\}^p</span><script type="math/tex">\mathbf{y} \in \{0,~1\}^p</script></span>是一个代表p类-分类的向量，那么这就是一个线性分类问题；相反，如果此处<span><span class="MathJax_Preview">\mathbf{y} \in \mathbb{R}^p</span><script type="math/tex">\mathbf{y} \in \mathbb{R}^p</script></span>在连续p维空间取值，那么这就是一个线性回归问题。</p>
+<h2 id="_3">线性问题与凸问题<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>请注意，虽然我们在此处提到“<span></span><strong>线性问题 (Linear problem)</strong><span></span>”，但我们指的并非“<span></span><strong>线性规划 (Linear problem)</strong><span></span>”。虽然严格意义上，线性规划才是真正的线性问题，但我们在此处尚不讨论线性规划相关的内容，而是着眼于机器学习应用最普遍的两个领域，<span></span><strong>分类</strong><span></span>和<span></span><strong>回归</strong><span></span>上。实际上，这两种问题虽然求解的是线性函数，但本质上是凸问题。</p>
+<p>例如，如果我们要求解回归问题，通常可以表述成</p>
+<div class="overflow">\begin{equation}
+    \begin{aligned}
+        \arg \min_{\mathbf{A}}~&amp; \sum_{i=1}^N \mathcal{L}(\mathbf{A},~\mathbf{x}_i,~\mathbf{y}_i), \\
+        \mathcal{L}(\mathbf{A},~\mathbf{x},~\mathbf{y}) &amp;= \lVert \mathbf{y} - \mathbf{A}\mathbf{x} \rVert^2_2.
+    \end{aligned}
+\end{equation}</div>
+
+<p>虽然我们求解的模型<span><span class="MathJax_Preview">\mathbf{A}</span><script type="math/tex">\mathbf{A}</script></span>是线性的，但我们优化的函数对象<span><span class="MathJax_Preview">\mathcal{L}</span><script type="math/tex">\mathcal{L}</script></span>是一个<span></span><strong>凸函数 (convex function)</strong><span></span>。在此，我们可以将这个标量函数(同时也是凸函数)表述为</p>
+<div class="overflow">\begin{align}
+    \forall~\alpha,~\beta,~\mathbf{x}_1,~\mathbf{x}_2,~\mathcal{L}(\alpha\mathbf{x}_1 + \beta\mathbf{x}_2) \leqslant \alpha\mathcal{L}(\mathbf{x}_1) + \beta\mathcal{L}(\mathbf{x}_2).
+\end{align}</div>
+
+<p>我们将这个问题表述为<span></span><strong>最小二乘问题(Least-square problem)</strong><span></span>。正是由于<span><span class="MathJax_Preview">\mathbf{A}</span><script type="math/tex">\mathbf{A}</script></span>是线性的，<span><span class="MathJax_Preview">\mathcal{L}</span><script type="math/tex">\mathcal{L}</script></span>才能被确保为一个凸函数，进而，我们才能确保上述问题能得到精确的全局最小值解。</p>
+<h2 id="tensorflow">知悉Tensorflow<a class="headerlink" href="#tensorflow" title="Permanent link">&para;</a></h2>
+<p>在本章接下来的内容里，我们将探讨Tensorflow如何求解一些简单的问题。对于初次上手的读者而言，在安装Tensorflow，亲自开始写一些project之前，笔者推荐你到这个游乐场“抢鲜体验”一番，</p>
+<p><a class="boxedThumb" href="https://playground.tensorflow.org/" style="text-align:center"><img alt="" src="../../assets/images/book-1-x/tf-playground.png" /><span>Tensorflow Playground</span></a></p>
+<p>在这个在线页面里，用户不需要有任何编程知识，可以通过直观的操作界面，建立一个简单的<span></span><strong>多层感知机网络(有时也叫做Artificial Neural Network, ANN)</strong><span></span>，并且实时观测网络的性能和测度。它提供了几个简单的二维数据集，供用户体验不同的数据集下，各种分类、回归问题的合宜解法。如果读者已经对神经网络的基本原理有所了解，相信能通过这个小小的实验场达到心有灵犀。我们在本章所做的project和demo，大体不跳出这个试验场的范畴，只是会略微复杂一点而已。</p>
+<h2 id="_4">本章要点<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>下图展示了通过本章学习，能了解到的概念：</p>
+<div class="mermaid">graph LR
+st(Hello world!) --&gt; linprog(线性分类)
+linprog --&gt; linreg(线性回归)
+linreg --&gt; nonlinreg(非线性回归)
+nonlinreg --&gt; ed(非线性分类)
+
+lp[感知机] --&gt; linprog
+sigma[Logsitc回归] --&gt; linprog
+ce[交叉熵] --&gt; linprog
+opt[优化器] --&gt; linreg
+argpar[项目选项] --&gt; linreg
+para[参数回归] --&gt; nonlinreg
+kernel[核函数] --&gt; ed
+
+classDef styStart fill:#FAE6A9,stroke:#BA9132;
+class st,linprog,linreg,nonlinreg,ed styStart</div>
+
 <ul>
-<li>完成“从线性问题入门”专题下的<a href="../book-1-x/chapter-1/">本章总说</a>和<a href="../book-1-x/chapter-1/hello-world/">Hello world!</a>；</li>
-<li>微调图片链接，<a href="https://www.mathjax.org/">MathJax</a>的显示特性。</li>
-</ul>
-<h3 id="012-march-3-2019">0.12 <small>@ March 3, 2019</small><a class="headerlink" href="#012-march-3-2019" title="Permanent link">&para;</a></h3>
-<ul>
-<li>补完扉页。未来可能会调整<a href="../#_2">教程导读</a>；</li>
-<li>修复<a href="https://facelessuser.github.io/pymdown-extensions/extensions/arithmatex/">Arithmatex</a>对<a href="https://www.mathjax.org/">MathJax</a>的引入；</li>
-<li>引入<a href="https://mermaidjs.github.io/">mermaid</a>库，用于绘制示意图。</li>
-</ul>
-<h3 id="011-february-25-2019">0.11 <small>@ February 25, 2019</small><a class="headerlink" href="#011-february-25-2019" title="Permanent link">&para;</a></h3>
-<ul>
-<li>提交<a href="https://analytics.google.com/analytics/web">Google Analytics</a>和<a href="https://search.google.com/search-console/about">Google Search Console</a>的账户关联资料；</li>
-<li>提交<a href="https://disqus.com">Disqus</a>关联资料。</li>
-</ul>
-<h3 id="010-february-25-2019">0.10 <small>@ February 25, 2019</small><a class="headerlink" href="#010-february-25-2019" title="Permanent link">&para;</a></h3>
-<ul>
-<li>正式立项，并撰写扉页的一部分。</li>
+<li><strong>Hello world</strong>: 首先，在本节，读者将了解Tensorflow的安装方法，并编写通过第一个简单的Tensorflow程序。</li>
+<li><strong>线性分类</strong>: 本节通过解一个简单的二分类问题，我们将引入单层感知机、Logistic回归和交叉熵的概念，并且实验结果进行可视化。</li>
+<li><strong>线性回归</strong>: 本节通过解一个与上一节难度相仿的，简单的回归问题，另读者能对比不同优化器的性能、特点，并介绍如何在项目中进行arugument parsing(引入项目的可选项)。</li>
+<li><strong>非线性回归</strong>: 本节将修改上一节回归问题的激活函数，将线性的回归问题推广到解析函数参数回归的范畴。</li>
+<li><strong>非线性分类</strong>: 本节将通过上一节的参数回归，引入核函数的概念，将线性分类问题推广到非线性空间里。</li>
 </ul>
                 
                   
@@ -690,9 +618,9 @@
   <div id="disqus_thread"></div>
   <script>
     var disqus_config = function () {
-      this.page.url = "https://cainmagi.github.io/tensorflow-guide/release-notes/";
+      this.page.url = "https://cainmagi.github.io/tensorflow-guide/book-1-x/chapter-1/";
       this.page.identifier =
-        "release-notes/";
+        "book-1-x/chapter-1/";
     };
     (function() {
       var d = document, s = d.createElement("script");
@@ -714,7 +642,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../book-1-x/chapter-1/hello-world/" title="Hello world!" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../.." title="扉页" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -723,19 +651,19 @@
                 <span class="md-footer-nav__direction">
                   后退
                 </span>
-                Hello world!
+                扉页
               </span>
             </div>
           </a>
         
         
-          <a href="../licenses/" title="协议" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="hello-world/" title="Hello world!" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   前进
                 </span>
-                协议
+                Hello world!
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
@@ -762,7 +690,7 @@
       </div>
       
   <div class="md-footer-social">
-    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
     
       <a href="https://cainmagi.github.io/" class="md-footer-social__link fa fa-globe"></a>
     
@@ -786,34 +714,34 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.43ad2ac2.js"></script>
+      <script src="../../assets/javascripts/application.43ad2ac2.js"></script>
       
         
         
           
-          <script src="../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          <script src="../../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
           
             
               
-                <script src="../assets/javascripts/lunr/tinyseg.js"></script>
+                <script src="../../assets/javascripts/lunr/tinyseg.js"></script>
               
               
-                <script src="../assets/javascripts/lunr/lunr.jp.js"></script>
+                <script src="../../assets/javascripts/lunr/lunr.jp.js"></script>
               
             
           
           
         
       
-      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js"></script>
       
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       
-        <script src="../javascripts/simpleLightbox.min.js"></script>
+        <script src="../../javascripts/simpleLightbox.min.js"></script>
       
-        <script src="../javascripts/extensions.js"></script>
+        <script src="../../javascripts/extensions.js"></script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
       

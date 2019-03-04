@@ -409,6 +409,54 @@
           
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-1-2" type="checkbox" id="nav-1-2">
+    
+    <label class="md-nav__link" for="nav-1-2">
+      从线性问题入门
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="2">
+      <label class="md-nav__title" for="nav-1-2">
+        从线性问题入门
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="book-1-x/chapter-1/" title="本章总说" class="md-nav__link">
+      本章总说
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="book-1-x/chapter-1/hello-world/" title="Hello world!" class="md-nav__link">
+      Hello world!
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
   <li class="md-nav__item">
     <a href="release-notes/" title="更新记录" class="md-nav__link">
       更新记录
@@ -547,9 +595,9 @@
 </ul>
 <details class="tip" open="open"><summary>提示</summary><p>特别值得注意的是，现在官方文档至少在教程部分，<strong>已经支持中英双语</strong>。相比官方文档，我们的教程更侧重于以搭建工程为导向的设计。然而现在官方文档的翔实可读程度，确实不可错过</p>
 </details>
-<p>大略来说，学习Tensorflow主要应当依赖于官方文档的介绍。敝人自r1.4版开始入门Tensorflow，即是通过学习官方文档的教程来快速上手。相比四处蒐集资料，官方文档能提供一个完整、系统、完全贴合时下最新API的例子，帮助用户建立一个与Tensorflow各个功能合宜的使用习惯。若是通过在Github上检索他人的Project，固然是一个很好的上手办法，但是往往就会遗漏某些重要的功能而不学。例如，Tensorflow自带的网络存取和Tensorboard API，在时兴的一些Project中，经常会因方便之故，以numpy的IO来代替。笔者以为，如此培养起来的使用习惯，可谓走入偏门。当然，从这一点来说，本教程也亦复如是，即使笔者写下这些内容的时候，参照的乃是时下最新的API，时间一久，难免会过时。倘若笔者懒惰一些，不再时时更新本教程，那么本教程也就入不足取之流了。</p>
+<p>大略来说，学习Tensorflow主要应当依赖于官方文档的介绍。敝人自r1.4版开始入门Tensorflow，即是通过学习官方文档的教程来快速上手。相比四处蒐集资料，官方文档能提供一个完整、系统、完全贴合时下最新API的例子，帮助用户建立一个与Tensorflow各个功能合宜的使用习惯。若是通过在Github上检索他人的project，固然是一个很好的上手办法，但是往往就会遗漏某些重要的功能而不学。例如，Tensorflow自带的网络存取和Tensorboard API，在时兴的一些project中，经常会因方便之故，以numpy的IO来代替。笔者以为，如此培养起来的使用习惯，可谓走入偏门。当然，从这一点来说，本教程也亦复如是，即使笔者写下这些内容的时候，参照的乃是时下最新的API，时间一久，难免会过时。倘若笔者懒惰一些，不再时时更新本教程，那么本教程也就入不足取之流了。</p>
 <p>虽然如此，教程也有并不合宜的地方。最大的问题莫过于Tensorflow本身，它有着日新月异的变化，此时能圆转如意地使用的API，到了彼时也许就成了废案。这就导致Tensorflow的官方教程也不断更新。r1.4时，教程还主要集中在如何使用“底层”API上，到了r1.9.0，就已经变成基本围绕着<code>tf.keras</code>设计的思路了。最新消息显示，即将上线的Tensorflow 2.0，将会彻底抛弃过去的“中层”API以下的全部方法，<code>tf.layers</code>, <code>tf.contrib</code>都将被移除，倘若长期墨守成规，局限在入门时候的一套技术上，迟早会被官方库如此迅速的更新所弃。这也是无可奈何之事。毕竟Tensorflow仍然处于不断改进之中。倘若希望追求一个更加稳定、长期可用的库，keras或许是一个不错的选择。</p>
-<p>故而，本教程将基本基于Tensorflow现在的版本(r1.13)展开介绍。本教程既可以看作一个入门教程，也可以看作是本人重新自学新版Tensorflow规范化API的一个手记，故而命名本教程为“手札”。读者不妨跟着笔者的思路，有如与笔者共学一般读下来本教程。</p>
+<p>故而，本教程将基本基于Tensorflow现在的版本(r1.12)展开介绍。本教程既可以看作一个入门教程，也可以看作是本人重新自学新版Tensorflow规范化API的一个手记，故而命名本教程为“手札”。读者不妨跟着笔者的思路，有如与笔者共学一般读下来本教程。</p>
 <h3 id="tensorflow_2">Tensorflow原理<a class="headerlink" href="#tensorflow_2" title="Permanent link">&para;</a></h3>
 <p>一个标准的Tensorflow工作流可以表示成这样：</p>
 <div class="mermaid">graph TD
@@ -575,7 +623,7 @@ class ioNet,ioNetS,ioDat,ioRes styIO</div>
 <p>与一般的计算库不同，Tensorflow的执行流程大体可以分为两步：</p>
 <ol>
 <li><strong>构造流程</strong>: 在这一步，Tensorflow根据用户代码构造一个<a href="https://www.tensorflow.org/guide/graphs">数据流图(dataflow graph)</a>。所谓数据流图，指的是由一系列<a href="https://www.tensorflow.org/guide/tensors">张量(Tensor)</a>构成的符号运算集合。就如同一张流程图一样，在这一阶段，尽管用户定义了每一步的运算（从简单的加减乘除到复杂的网络单元），但是没有任何运算被执行。就像一个程序员撰写代码一样，Tensorflow在这一步，将用户的代码转换成它的“机器语言”，但是网络还没有进入被使用的阶段。</li>
-<li><strong>执行流程</strong>: 在这一步，Tensorflow将计算用户指定的某个 <strong>Tensor</strong> 的输出结果。要得到一个Tensor的输出，则必须得计算它一系列的依赖变量。例如，我们已知<span><span class="MathJax_Preview">y = x_1 + x_2</span><script type="math/tex">y = x_1 + x_2</script></span>, <span><span class="MathJax_Preview">x_2 = z_1 \times z_2</span><script type="math/tex">x_2 = z_1 \times z_2</script></span>。那么，如果Tensorflow要得到<span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>的结果，它就必须先计算<span><span class="MathJax_Preview">x_2</span><script type="math/tex">x_2</script></span>。这个过程被完全地封装起来，从用户看来，我们只需要调用<span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>的输出即可，不需要关心Tensorflow是怎样按照流图完成计算的。</li>
+<li><strong>执行流程</strong>: 在这一步，Tensorflow将计算用户指定的某个<span></span><strong>Tensor</strong><span></span>的输出结果。要得到一个Tensor的输出，则必须得计算它一系列的依赖变量。例如，我们已知<span><span class="MathJax_Preview">y = x_1 + x_2</span><script type="math/tex">y = x_1 + x_2</script></span>, <span><span class="MathJax_Preview">x_2 = z_1 \times z_2</span><script type="math/tex">x_2 = z_1 \times z_2</script></span>。那么，如果Tensorflow要得到<span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>的结果，它就必须先计算<span><span class="MathJax_Preview">x_2</span><script type="math/tex">x_2</script></span>。这个过程被完全地封装起来，从用户看来，我们只需要调用<span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>的输出即可，不需要关心Tensorflow是怎样按照流图完成计算的。</li>
 </ol>
 <p>因此，典型的Tensorflow式的语言风格也可以这样划分：</p>
 <ol>
@@ -598,7 +646,7 @@ class ioNet,ioNetS,ioDat,ioRes styIO</div>
 <p>另一种使用方式，是从中层API开始，直接使用预定义好的网络层构建网络，这样的代码风格会节省一部分时间，相当于几乎不再需要接触底层API，但是在输入输出、网络训练和测试等更高层的模块设计上，和底层API用户的代码风格相似。</p>
 <p>Estimators是从r1.4就已经存在的API了，它可以被看成是已经集成在Tensorflow里的完整的网络。因此，Estimators往往适合分发、需求不高的应用，但是并不适合使用Tensorflow的研究者。尽管至今为止，Tensorflow仍然对Estimators倍加推崇，但本教程将完全不涉及这方面的内容。</p>
 <p>另一个高层API是<a href="https://www.tensorflow.org/guide/eager">Eager Execution</a>，从r1.9起，Tensorflow就加入了这种新的使用模式，并且在Tensorflow 2.0中，它仍然将会被保留。Eager摈弃了上述的构造-执行流程，任何对Tensor的定义会被立时计算、并可得到结果。对于需要进行小规模的调试、检查API功能的用户而言更加方便。但是，据一些用户的反响，现在Eager还没有做到和之前API的完全兼容，本教程将基本不涉及Eager的用法。</p>
-<p>因此，Keras API将是本教程的重中之重。使用本教程的用户，可以对照目前的官方文档，跟进本教程的思路，自己逐步实现各个Project的设计。使用Keras风格的设计，代码量会明显少于前面提到的各种风格（Estimators除外）。事实上，<code>tf.keras</code>和底层API之间具有一定的兼容，这样的编写风格能让我们在满足自己设计的派生功能的基础上，尽可能使用规范化、预定义的API单元，从而减少代码出错的可能性。通过对本教程TF 1.x版的学习，对未来2.0版的上手也会带来莫大帮助。</p>
+<p>因此，Keras API将是本教程的重中之重。使用本教程的用户，可以对照目前的官方文档，跟进本教程的思路，自己逐步实现各个project的设计。使用Keras风格的设计，代码量会明显少于前面提到的各种风格（Estimators除外）。事实上，<code>tf.keras</code>和底层API之间具有一定的兼容，这样的编写风格能让我们在满足自己设计的派生功能的基础上，尽可能使用规范化、预定义的API单元，从而减少代码出错的可能性。通过对本教程TF 1.x版的学习，对未来2.0版的上手也会带来莫大帮助。</p>
 <p style="text-align:right">金宇琛(<a class="magiclink magiclink-github magiclink-mention" href="https://github.com/cainmagi" title="GitHub User: cainmagi">@cainmagi</a>)，2019年3月2日</p>
 
 <p style="text-align:right">Yuchen Jin(<a class="magiclink magiclink-github magiclink-mention" href="https://github.com/cainmagi" title="GitHub User: cainmagi">@cainmagi</a>), Mar. 2, 2019</p>
@@ -606,15 +654,15 @@ class ioNet,ioNetS,ioDat,ioRes styIO</div>
 <h2 id="_2">教程导读<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>接下来，本教程将会涉及</p>
 <ul>
-<li><strong>从线性规划入门</strong>: 如何使用Tensorflow完成一个简单的线性规划设计，我们将从Hello World开始，逐步过渡到一个具有核函数的非线性规划Project。<ul>
+<li><strong>从线性问题入门</strong>: 如何使用Tensorflow完成一个简单的线性分类设计，我们将从Hello World开始，逐步过渡到一个具有核函数的非线性问题project。<ul>
 <li>Hello world: 第一个Tensorflow程序。</li>
-<li>线性规划: 一个简单的二分类问题。</li>
+<li>线性分类: 一个简单的二分类问题。</li>
 <li>线性回归: 一个同样简单的，线性拟合问题。</li>
 <li>非线性回归: 拟合一个简单的，可以表达出解析式的非线性函数。</li>
-<li>非线性规划: 使用线性分类器对非线性分布的数据进行分类。</li>
+<li>非线性分类: 使用线性分类器对非线性分布的数据进行分类。</li>
 </ul>
 </li>
-<li><strong>训练与测试分立</strong>: 从这一章开始，并试图解决几个更加复杂的实际问题。这里涉及到的Project相对更大、更完整，训练往往需要一定时间才能完成。因此，在本章，所有项目的训练、测试环节都会分开，我们将从这里开始，使用TensorBoard跟踪我们的训练情况，并介绍如何存取神经网络。<ul>
+<li><strong>训练与测试分立</strong>: 从这一章开始，并试图解决几个更加复杂的实际问题。这里涉及到的project相对更大、更完整，训练往往需要一定时间才能完成。因此，在本章，所有项目的训练、测试环节都会分开，我们将从这里开始，使用TensorBoard跟踪我们的训练情况，并介绍如何存取神经网络。<ul>
 <li>Super Resolution: 使用神经网络进行图像像素插值。</li>
 <li>Sparse Coding: 使用线性的词典学习(dictionary learning)来进行图像像素插值。</li>
 <li>Generitive Model: 使用时兴的生成模型(Generitive Model)来完成图像风格的转换。</li>
@@ -665,13 +713,13 @@ class ioNet,ioNetS,ioDat,ioRes styIO</div>
       <nav class="md-footer-nav__inner md-grid">
         
         
-          <a href="release-notes/" title="更新记录" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="book-1-x/chapter-1/" title="本章总说" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   前进
                 </span>
-                更新记录
+                本章总说
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

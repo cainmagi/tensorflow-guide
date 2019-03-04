@@ -2,6 +2,9 @@ a.boxedThumb {
     display:block;
     padding:4px;
     line-height:20px;
+    margin: 0 auto;
+    width: fit-content; 
+    height: fit-content;
     border:1px solid #ddd;
     -webkit-border-radius:4px;
     -moz-border-radius:4px;
