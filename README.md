@@ -14,6 +14,12 @@ Check the theory and guide on [here](https://cainmagi.github.io/tensorflow-guide
 
 Run this command to see the performance:
 
-```python
+```bash
 python lin-cls.py
 ```
+
+# Update records
+
+## 1.0 @ 03/05/2019
+
+Create this project.
