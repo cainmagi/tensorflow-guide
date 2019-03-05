@@ -870,7 +870,7 @@
    \mathcal{L} \left( \mathbf{y},~ \tilde{\mathbf{y}} \right) = \lVert \mathbf{y} - \tilde{\mathbf{y}} \rVert_2^2.
 \end{align}</div>
 
-<p>我们称<a href="#mjx-eqn-7"><span><span class="MathJax_Preview">(7)</span><script type="math/tex">(7)</script></span></a>为<span></span><strong>逻辑斯蒂回归(logistic regression)</strong><span></span>。有趣的是，虽然这个术语叫“回归”，但它解的其实是个分类问题。但是，既然这是一个分类问题，我们可以不使用这个损失函数，而是从概率论的角度看待这个问题。由此，我们引出一个新的损失函数：“交叉熵”。</p>
+<p>我们称<a href="#mjx-eqn-8"><span><span class="MathJax_Preview">(8)</span><script type="math/tex">(8)</script></span></a>为<span></span><strong>逻辑斯蒂回归(logistic regression)</strong><span></span>。有趣的是，虽然这个术语叫“回归”，但它解的其实是个分类问题。但是，既然这是一个分类问题，我们可以不使用这个损失函数，而是从概率论的角度看待这个问题。由此，我们引出一个新的损失函数：“交叉熵”。</p>
 <h3 id="_6">交叉熵<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <p>我们视sigmoid函数输出的值为一个概率，表示分类器对预测结果的确信程度，记<span><span class="MathJax_Preview">\mathbf{W},~\mathbf{b} \in \boldsymbol{\Theta}</span><script type="math/tex">\mathbf{W},~\mathbf{b} \in \boldsymbol{\Theta}</script></span>，则</p>
 <div class="overflow">\begin{equation}
@@ -904,19 +904,19 @@
     \end{aligned}
 \end{equation}</div>
 
-<p>我们最终的目的是要最大化似然函数，亦即<span><span class="MathJax_Preview">\mathbf{W},~\mathbf{b} = \arg\max\limits_{\boldsymbol{\Theta}} l(\boldsymbol{\Theta})</span><script type="math/tex">\mathbf{W},~\mathbf{b} = \arg\max\limits_{\boldsymbol{\Theta}} l(\boldsymbol{\Theta})</script></span>，这等价于最小化<span><span class="MathJax_Preview">-l(\boldsymbol{\Theta})</span><script type="math/tex">-l(\boldsymbol{\Theta})</script></span>。对比<a href="#mjx-eqn-7"><span><span class="MathJax_Preview">(7)</span><script type="math/tex">(7)</script></span></a>和<a href="#mjx-eqn-8"><span><span class="MathJax_Preview">(8)</span><script type="math/tex">(8)</script></span></a>，于是我们可以定义交叉熵为</p>
+<p>我们最终的目的是要最大化似然函数，亦即<span><span class="MathJax_Preview">\mathbf{W},~\mathbf{b} = \arg\max\limits_{\boldsymbol{\Theta}} l(\boldsymbol{\Theta})</span><script type="math/tex">\mathbf{W},~\mathbf{b} = \arg\max\limits_{\boldsymbol{\Theta}} l(\boldsymbol{\Theta})</script></span>，这等价于最小化<span><span class="MathJax_Preview">-l(\boldsymbol{\Theta})</span><script type="math/tex">-l(\boldsymbol{\Theta})</script></span>。对比<a href="#mjx-eqn-8"><span><span class="MathJax_Preview">(8)</span><script type="math/tex">(8)</script></span></a>和<a href="#mjx-eqn-9"><span><span class="MathJax_Preview">(9)</span><script type="math/tex">(9)</script></span></a>，于是我们可以定义交叉熵为</p>
 <div class="overflow">\begin{align}
    \mathcal{L} \left( \mathbf{y},~ \tilde{\mathbf{y}} \right) = \mathbf{y} \cdot \log\left( \tilde{\mathbf{y}} \right) + \left(1 - \mathbf{y} \right) \cdot \log\left(1 - \tilde{\mathbf{y}} \right).
 \end{align}</div>
 
-<p>若我们记<span><span class="MathJax_Preview">\tilde{\mathbf{y}} = \sigma(\tilde{\mathbf{x}})</span><script type="math/tex">\tilde{\mathbf{y}} = \sigma(\tilde{\mathbf{x}})</script></span>，代入sigmoid函数，为了确保该损失函数的稳定性，我们可以将<a href="#mjx-eqn-13"><span><span class="MathJax_Preview">(13)</span><script type="math/tex">(13)</script></span></a>整理为</p>
+<p>若我们记<span><span class="MathJax_Preview">\tilde{\mathbf{y}} = \sigma(\tilde{\mathbf{x}})</span><script type="math/tex">\tilde{\mathbf{y}} = \sigma(\tilde{\mathbf{x}})</script></span>，代入sigmoid函数，为了确保该损失函数的稳定性，我们可以将<a href="#mjx-eqn-14"><span><span class="MathJax_Preview">(14)</span><script type="math/tex">(14)</script></span></a>整理为</p>
 <div class="overflow">\begin{align}
    \mathcal{L} \left( \mathbf{y},~ \tilde{\mathbf{x}} \right) = \max(\tilde{\mathbf{x}}, \mathbf{0}) - \tilde{\mathbf{x}} \cdot \mathbf{y} + \log\left(1 + e^{-|\tilde{\mathbf{x}}|} \right).
 \end{align}</div>
 
 <details class="tip" open="open"><summary>提示</summary><p>这里交叉熵整理的推导过程参见<a href="https://www.tensorflow.org/api_docs/python/tf/nn/sigmoid_cross_entropy_with_logits">Tensorflow-API官方文档</a>。</p>
 </details>
-<p>实际情况下，我们使用<a href="#mjx-eqn-14"><span><span class="MathJax_Preview">(14)</span><script type="math/tex">(14)</script></span></a>来求取sigmoid函数激活下的交叉熵。</p>
+<p>实际情况下，我们使用<a href="#mjx-eqn-15"><span><span class="MathJax_Preview">(15)</span><script type="math/tex">(15)</script></span></a>来求取sigmoid函数激活下的交叉熵。</p>
 <h2 id="_7">解线性多分类问题<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <h3 id="_8">代码规范<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <p>建立一个具有较强可读性的Tensorflow工程需要我们活用python的模块化设计。我们通常推荐以下的结构</p>
@@ -1220,7 +1220,7 @@ class st,ed styStart</div>
 <p>我们使用<code>Dense</code>定义全连接层，它的用法请参照<a href="https://keras-zh.readthedocs.io/layers/core/#dense">这里</a>。由于我们已经知道<span><span class="MathJax_Preview">\mathbf{A}</span><script type="math/tex">\mathbf{A}</script></span>和<span><span class="MathJax_Preview">\mathbf{c}</span><script type="math/tex">\mathbf{c}</script></span>可能的取值范围，这里我们重定义了<span><span class="MathJax_Preview">\mathbf{W}</span><script type="math/tex">\mathbf{W}</script></span>和<span><span class="MathJax_Preview">\mathbf{b}</span><script type="math/tex">\mathbf{b}</script></span>的初始化方式。</p>
 <p>另外，注意我们这里构造网络的时候有如下技巧：</p>
 <ul>
-<li>我们定义的网络输出是<span><span class="MathJax_Preview">\mathbf{W}\mathbf{x} + \mathbf{b}</span><script type="math/tex">\mathbf{W}\mathbf{x} + \mathbf{b}</script></span>，而非<span><span class="MathJax_Preview">\sigma(\mathbf{W}\mathbf{x} + \mathbf{b})</span><script type="math/tex">\sigma(\mathbf{W}\mathbf{x} + \mathbf{b})</script></span>。这是因为我们需要通过还未被激活的输出用来计算sigmoid交叉熵，亦即式<a href="#mjx-eqn-14"><span><span class="MathJax_Preview">(14)</span><script type="math/tex">(14)</script></span></a>；</li>
+<li>我们定义的网络输出是<span><span class="MathJax_Preview">\mathbf{W}\mathbf{x} + \mathbf{b}</span><script type="math/tex">\mathbf{W}\mathbf{x} + \mathbf{b}</script></span>，而非<span><span class="MathJax_Preview">\sigma(\mathbf{W}\mathbf{x} + \mathbf{b})</span><script type="math/tex">\sigma(\mathbf{W}\mathbf{x} + \mathbf{b})</script></span>。这是因为我们需要通过还未被激活的输出用来计算sigmoid交叉熵，亦即式<a href="#mjx-eqn-15"><span><span class="MathJax_Preview">(15)</span><script type="math/tex">(15)</script></span></a>；</li>
 <li>我们通过静态方法，直接调用Tensorflow自带的<a href="https://www.tensorflow.org/api_docs/python/tf/nn/sigmoid_cross_entropy_with_logits">sigmoid交叉熵</a>函数来作为Keras模型的损失函数<code>self..loss</code>；</li>
 <li>我们通过静态方法，调用Keras的后端API，自己定义了预测准确度的测度函数<code>self.accuracy</code>；</li>
 <li>我们将网络层的关键字<code>self.dense1</code>保留在了实例中，这是为了确保接下来我们能通过实例抽取该层的参数。</li>
