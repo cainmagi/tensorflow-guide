@@ -463,6 +463,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../linear-classification/" title="线性分类" class="md-nav__link">
+      线性分类
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -634,6 +646,8 @@
 </tbody>
 </table>
 <p>如果更新完成，如右图，可以在设置界面检查到当前的版本已经达到最新。在安装过程中，由于驱动更新，屏幕可能会闪烁数次。在看到更新提示完成后建议重启。</p>
+<details class="tip" open="open"><summary>提示</summary><p>如果GeForce Experience提示无法更新驱动，可以考虑将机器恢复出厂设置，可能可以解决这一问题。</p>
+</details>
 <h3 id="cuda">安装CUDA<a class="headerlink" href="#cuda" title="Permanent link">&para;</a></h3>
 <p>驱动更新并重启后，需要安装最新版的Visual Studio(VS)，这是因为CUDA库本身对VS具有一定的支持，如果先安装CUDA，则这部分支持无法安装到位。这对我们使用Tensorflow并不造成妨害，但是对CUDA的用户并不是一个推荐的做法，所以无论如何，建议在第一步，安装VS，下面提供VS社区版（免费）的链接：</p>
 <p><a href="https://visualstudio.microsoft.com/zh-hans/">Visual Studio官网</a></p>
@@ -645,6 +659,8 @@
 <p>现在的安装包已经支持在线安装包和离线安装包两种模式，读者可以根据自己的实际情况选择对应的版本。注意，安装CUDA的时候，CUDA可能要求我们翻新驱动版本，但通过GeForce Experience安装的驱动一般应已达到最新，新于CUDA内部提供的驱动。因此，我们需要选择定制安装模式，根据我们需要对比版本号，将驱动更新的选项取消，如下图所示</p>
 <p><img alt="安装CUDA时取消勾选更新驱动" class="img-fluid" src="../../../assets/images/book-1-x/nvidia-cuda.png" tag="3" title="安装CUDA时取消勾选更新驱动" /></p>
 <p>安装CUDA后，建议重启。</p>
+<details class="danger" open="open"><summary>危险</summary><p>特别需要注意的是，如果你的机器无法通过GeForce Experience更新驱动，那么在这里选择安装驱动也是枉然。并且，这种强制更新驱动的行为很可能导致系统崩溃。因此特别建议在安装CUDA之前一定要解决驱动更新的问题，哪怕是通过恢复出厂设置。</p>
+</details>
 <h3 id="cudnn">安装CUDNN<a class="headerlink" href="#cudnn" title="Permanent link">&para;</a></h3>
 <p>安装CUDA的同时，已经自带安装上了CUPTI。但是CUDNN并没有包含在CUDA中，因此，我们需要到以下链接下载CUDNN并查看安装说明</p>
 <p><a href="https://developer.nvidia.com/cudnn">下载最新版CUDNN</a></p>
@@ -681,6 +697,14 @@
 </pre></div>
 
 <p>转换到虚环境中。</p>
+<details class="tip" open="open"><summary>提示</summary><p>如果用户愿意，还可以通过
+<div class="codehilite"><pre><span></span>conda install -c conda-forge opencv 
+</pre></div>
+安装<a href="https://anaconda.org/conda-forge/opencv">opencv</a>。opencv是一个强大的图像处理库，这里python版的opencv比C++版更容易上手。一般该命令安装的是conda库中最新版的opencv（截至笔者写到这里时是opencv3.4.4）。然而，这样安装的并非是支持GPU的版本。尽管conda还提供一个GPU的opencv版本，可以通过
+<div class="codehilite"><pre><span></span>conda install -c patricksnape opencv-gpu 
+</pre></div>
+安装<a href="https://anaconda.org/patricksnape/opencv-gpu">opencv2</a>，但它的版本还停留在2.4.9，和opencv3的用法殊有不同，请读者注意这一点。</p>
+</details>
 <h3 id="tensorflow_1">安装预编译好的Tensorflow<a class="headerlink" href="#tensorflow_1" title="Permanent link">&para;</a></h3>
 <p>我们可以查看如下项目：</p>
 <p><a class="magiclink magiclink-github magiclink-repository" href="https://github.com/fo40225/tensorflow-windows-wheel" title="GitHub Repository: fo40225/tensorflow-windows-wheel">fo40225/tensorflow-windows-wheel</a></p>
@@ -691,7 +715,18 @@
 <p>等待一段时间后，安装将会结束。</p>
 <h2 id="hello-world_1">Hello world! 测试<a class="headerlink" href="#hello-world_1" title="Permanent link">&para;</a></h2>
 <p>撰写如下代码，保存到<code>hello-world.py</code>文件，</p>
-<div class="codehilite"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+<div class="superfences-tabs">
+<input name="__tabs_1" type="radio" id="__tab_1_0" checked="checked" />
+<label for="__tab_1_0">Python</label>
+<div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
     <span class="n">test_str</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">)</span>
     <span class="n">test_cal</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random_normal</span><span class="p">([</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]))</span>
@@ -701,7 +736,14 @@
         <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Test string:     &#39;</span><span class="p">,</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test_str</span><span class="p">))</span>
         <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Test calculation:&#39;</span><span class="p">,</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test_cal</span><span class="p">))</span>
 </pre></div>
-
+</td></tr></table></div>
+<input name="__tabs_1" type="radio" id="__tab_1_1" />
+<label for="__tab_1_1">Output</label>
+<div class="superfences-content"><div class="codehilite"><pre><span></span>Current Tensorflow version is: <span class="m">1</span>.12.0
+Test string:      b<span class="s1">&#39;Hello, world!&#39;</span>
+Test calculation: -1948.6578
+</pre></div></div>
+</div>
 <p>在保存目录下，执行</p>
 <div class="codehilite"><pre><span></span>python hello-world.py
 </pre></div>
@@ -760,13 +802,13 @@
           </a>
         
         
-          <a href="../../../release-notes/" title="更新记录" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../linear-classification/" title="线性分类" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   前进
                 </span>
-                更新记录
+                线性分类
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

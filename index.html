@@ -447,6 +447,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="book-1-x/chapter-1/linear-classification/" title="线性分类" class="md-nav__link">
+      线性分类
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -589,11 +601,11 @@
 <p>写在所有内容之前，读者不得不看以下几个页面，本教程所述内容大略来自于对这些资料的研读。</p>
 <ul>
 <li><strong>Tensorflow官网(中/英文)</strong>: <a href="https://www.tensorflow.org/">https://www.tensorflow.org/</a></li>
-<li><strong>Keras中文文档</strong>: <a href="https://keras.io/zh/">https://keras.io/zh/</a></li>
+<li><strong>Keras中文文档</strong>: <a href="https://keras-zh.readthedocs.io/">https://keras-zh.readthedocs.io/</a></li>
 <li><strong>Tensorflow 2.0前瞻(英文)</strong>: <a href="https://medium.com/tensorflow/effective-tensorflow-2-0-best-practices-and-whats-changed-a0ca48767aff">https://medium.com/tensorflow/effective-tensorflow-2-0-best-practices-and-whats-changed-a0ca48767aff</a></li>
 <li><strong>Tensorflow 2.0前瞻(中文)</strong>: <a href="https://zhuanlan.zhihu.com/p/50049041">https://zhuanlan.zhihu.com/p/50049041</a></li>
 </ul>
-<details class="tip" open="open"><summary>提示</summary><p>特别值得注意的是，现在官方文档至少在教程部分，<strong>已经支持中英双语</strong>。相比官方文档，我们的教程更侧重于以搭建工程为导向的设计。然而现在官方文档的翔实可读程度，确实不可错过</p>
+<details class="tip" open="open"><summary>提示</summary><p>特别值得注意的是，现在官方文档至少在教程部分，<strong>已经支持中英双语</strong>。相比官方文档，我们的教程更侧重于以搭建工程为导向的设计。然而现在官方文档的翔实可读程度，确实不可错过。另一方面，Keras的<a href="https://keras.io/zh/">官方中文文档</a>似乎已不再更新，上面提供的原官方中文文档译者现在正在更新、维护的版本。</p>
 </details>
 <p>大略来说，学习Tensorflow主要应当依赖于官方文档的介绍。敝人自r1.4版开始入门Tensorflow，即是通过学习官方文档的教程来快速上手。相比四处蒐集资料，官方文档能提供一个完整、系统、完全贴合时下最新API的例子，帮助用户建立一个与Tensorflow各个功能合宜的使用习惯。若是通过在Github上检索他人的project，固然是一个很好的上手办法，但是往往就会遗漏某些重要的功能而不学。例如，Tensorflow自带的网络存取和Tensorboard API，在时兴的一些project中，经常会因方便之故，以numpy的IO来代替。笔者以为，如此培养起来的使用习惯，可谓走入偏门。当然，从这一点来说，本教程也亦复如是，即使笔者写下这些内容的时候，参照的乃是时下最新的API，时间一久，难免会过时。倘若笔者懒惰一些，不再时时更新本教程，那么本教程也就入不足取之流了。</p>
 <p>虽然如此，教程也有并不合宜的地方。最大的问题莫过于Tensorflow本身，它有着日新月异的变化，此时能圆转如意地使用的API，到了彼时也许就成了废案。这就导致Tensorflow的官方教程也不断更新。r1.4时，教程还主要集中在如何使用“底层”API上，到了r1.9.0，就已经变成基本围绕着<code>tf.keras</code>设计的思路了。最新消息显示，即将上线的Tensorflow 2.0，将会彻底抛弃过去的“中层”API以下的全部方法，<code>tf.layers</code>, <code>tf.contrib</code>都将被移除，倘若长期墨守成规，局限在入门时候的一套技术上，迟早会被官方库如此迅速的更新所弃。这也是无可奈何之事。毕竟Tensorflow仍然处于不断改进之中。倘若希望追求一个更加稳定、长期可用的库，keras或许是一个不错的选择。</p>
@@ -632,6 +644,8 @@ class ioNet,ioNetS,ioDat,ioRes styIO</div>
 </ol>
 <p>这里提到<a href="https://www.tensorflow.org/guide/graphs#executing_a_graph_in_a_tfsession">会话(Session)</a>。Session如同一个Tensorflow虚拟机，在一个Session打开的时候，设备的计算资源（GPU, CPU, 带宽等）才被加载。Session又如同一个工人，用户撰写的网络构造代码如同车间，输入的数据如同商品，“工人（Session）”利用预定义好的“车间（流图）”将可以快速、批量地生产这些“商品（数据）”。这样地设计保证了一些外围的代码，例如指定网络参数的名称、函数的属性等操作，不需要重复进行，从而确保处理数据的时候，总是执行必要的代码，加快运算速度。</p>
 <p>另一方面，构造-执行的结构还封装了许多提高运算效率的特性，例如多线程。尽管用户定义网络构造的时候，所写的代码是按照逻辑顺序的、线性的。但实际运行的时候，Tensorflow可以自行发现网络的哪些部分可以被同时运行，从而利用多核系统的计算资源。这些过程也是被完全封装起来的，用户并不需要花费心思去专门进行这些调整。</p>
+<details class="info" open="open"><summary>须知</summary><p>在Tensorflow已经转变为Keras导向的现在，Session的调用被Keras API封装了起来，从用户的角度来看，现在已经不再需要手动调用Session。</p>
+</details>
 <h3 id="tensorflow-api">Tensorflow API架构<a class="headerlink" href="#tensorflow-api" title="Permanent link">&para;</a></h3>
 <p>下图显示了当前Tensorflow-API的组织形式</p>
 <p><img alt="Tensorflow APIs" class="img-fluid" src="assets/images/cov/apis.svg" tag="1" title="Tensorflow APIs" /></p>

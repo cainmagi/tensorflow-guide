@@ -28,6 +28,15 @@ a.boxedThumb:hover {
   z-index: 5;
 }
 
+.superfences-content a.boxedThumb {
+  width: 50%;
+  min-width: 320px;
+}
+
+html .md-typeset .superfences-tabs>label:hover{
+  color: #ff9100;
+}
+
 .progress-label {
   position: absolute;
   text-align: center;

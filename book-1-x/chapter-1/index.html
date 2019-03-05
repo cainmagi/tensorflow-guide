@@ -436,6 +436,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="linear-classification/" title="线性分类" class="md-nav__link">
+      线性分类
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -561,7 +573,7 @@
 
 <p>具体而言，<span><span class="MathJax_Preview">\mathbf{x}</span><script type="math/tex">\mathbf{x}</script></span>是我们的已知数据，<span><span class="MathJax_Preview">\mathbf{y}</span><script type="math/tex">\mathbf{y}</script></span>是我们的未知量，我们需要找到一个合适的<span><span class="MathJax_Preview">\mathbf{A}</span><script type="math/tex">\mathbf{A}</script></span>来确保<span><span class="MathJax_Preview">\mathbf{x}</span><script type="math/tex">\mathbf{x}</script></span>能拟合到<span><span class="MathJax_Preview">\mathbf{y}</span><script type="math/tex">\mathbf{y}</script></span>。如果此处<span><span class="MathJax_Preview">\mathbf{y} \in \{0,~1\}^p</span><script type="math/tex">\mathbf{y} \in \{0,~1\}^p</script></span>是一个代表p类-分类的向量，那么这就是一个线性分类问题；相反，如果此处<span><span class="MathJax_Preview">\mathbf{y} \in \mathbb{R}^p</span><script type="math/tex">\mathbf{y} \in \mathbb{R}^p</script></span>在连续p维空间取值，那么这就是一个线性回归问题。</p>
 <h2 id="_3">线性问题与凸问题<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>请注意，虽然我们在此处提到“<span></span><strong>线性问题 (Linear problem)</strong><span></span>”，但我们指的并非“<span></span><strong>线性规划 (Linear problem)</strong><span></span>”。虽然严格意义上，线性规划才是真正的线性问题，但我们在此处尚不讨论线性规划相关的内容，而是着眼于机器学习应用最普遍的两个领域，<span></span><strong>分类</strong><span></span>和<span></span><strong>回归</strong><span></span>上。实际上，这两种问题虽然求解的是线性函数，但本质上是凸问题。</p>
+<p>请注意，虽然我们在此处提到“<span></span><strong>线性问题 (Linear problem)</strong><span></span>”，但我们指的并非“<span></span><strong>线性规划 (Linear programming)</strong><span></span>”。虽然严格意义上，线性规划才是真正的线性问题，但我们在此处尚不讨论线性规划相关的内容，而是着眼于机器学习应用最普遍的两个领域，<span></span><strong>分类</strong><span></span>和<span></span><strong>回归</strong><span></span>上。实际上，这两种问题虽然求解的是线性函数，但本质上是凸问题。</p>
 <p>例如，如果我们要求解回归问题，通常可以表述成</p>
 <div class="overflow">\begin{equation}
     \begin{aligned}
@@ -583,21 +595,21 @@
 <h2 id="_4">本章要点<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>下图展示了通过本章学习，能了解到的概念：</p>
 <div class="mermaid">graph LR
-st(Hello world!) --&gt; linprog(线性分类)
-linprog --&gt; linreg(线性回归)
+st(Hello world!) --&gt; linclas(线性分类)
+linclas --&gt; linreg(线性回归)
 linreg --&gt; nonlinreg(非线性回归)
 nonlinreg --&gt; ed(非线性分类)
 
-lp[感知机] --&gt; linprog
-sigma[Logsitc回归] --&gt; linprog
-ce[交叉熵] --&gt; linprog
+lp[感知机] --&gt; linclas
+sigma[Logsitc回归] --&gt; linclas
+ce[交叉熵] --&gt; linclas
 opt[优化器] --&gt; linreg
 argpar[项目选项] --&gt; linreg
 para[参数回归] --&gt; nonlinreg
 kernel[核函数] --&gt; ed
 
 classDef styStart fill:#FAE6A9,stroke:#BA9132;
-class st,linprog,linreg,nonlinreg,ed styStart</div>
+class st,linclas,linreg,nonlinreg,ed styStart</div>
 
 <ul>
 <li><strong>Hello world</strong>: 首先，在本节，读者将了解Tensorflow的安装方法，并编写通过第一个简单的Tensorflow程序。</li>
