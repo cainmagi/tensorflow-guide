@@ -467,6 +467,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#tensorflow" title="Tensorflow的数据概念" class="md-nav__link">
+    Tensorflow的数据概念
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#_9" title="数据生成" class="md-nav__link">
     数据生成
   </a>
@@ -655,6 +662,13 @@
           <li class="md-nav__item">
   <a href="#_8" title="代码规范" class="md-nav__link">
     代码规范
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tensorflow" title="Tensorflow的数据概念" class="md-nav__link">
+    Tensorflow的数据概念
   </a>
   
 </li>
@@ -906,12 +920,13 @@
 
 <p>我们最终的目的是要最大化似然函数，亦即<span><span class="MathJax_Preview">\mathbf{W},~\mathbf{b} = \arg\max\limits_{\boldsymbol{\Theta}} l(\boldsymbol{\Theta})</span><script type="math/tex">\mathbf{W},~\mathbf{b} = \arg\max\limits_{\boldsymbol{\Theta}} l(\boldsymbol{\Theta})</script></span>，这等价于最小化<span><span class="MathJax_Preview">-l(\boldsymbol{\Theta})</span><script type="math/tex">-l(\boldsymbol{\Theta})</script></span>。对比<a href="#mjx-eqn-8"><span><span class="MathJax_Preview">(8)</span><script type="math/tex">(8)</script></span></a>和<a href="#mjx-eqn-9"><span><span class="MathJax_Preview">(9)</span><script type="math/tex">(9)</script></span></a>，于是我们可以定义交叉熵为</p>
 <div class="overflow">\begin{align}
-   \mathcal{L} \left( \mathbf{y},~ \tilde{\mathbf{y}} \right) = \mathbf{y} \cdot \log\left( \tilde{\mathbf{y}} \right) + \left(1 - \mathbf{y} \right) \cdot \log\left(1 - \tilde{\mathbf{y}} \right).
+   \mathcal{L} \left( \mathbf{y},~ \tilde{\mathbf{y}} \right) = \mathrm{mean}\left[ \mathbf{y} \cdot \log\left( \tilde{\mathbf{y}} \right) + \left(1 - \mathbf{y} \right) \cdot \log\left(1 - \tilde{\mathbf{y}} \right) \right].
 \end{align}</div>
 
+<p>注意这里我们使用<span><span class="MathJax_Preview">\mathrm{mean}\left[ \cdot \right]</span><script type="math/tex">\mathrm{mean}\left[ \cdot \right]</script></span>表示求取一个向量所有元素的平均值。实际上，Tensorflow允许我们定义损失函数的输出为一个和输出向量维度相同的向量，Tensorflow自带的交叉熵也是这样定义的。实际应用时，Tensorflow会自动在向量维度上求均值，并压缩成上述<a href="#mjx-eqn-14"><span><span class="MathJax_Preview">(14)</span><script type="math/tex">(14)</script></span></a>的形式。</p>
 <p>若我们记<span><span class="MathJax_Preview">\tilde{\mathbf{y}} = \sigma(\tilde{\mathbf{x}})</span><script type="math/tex">\tilde{\mathbf{y}} = \sigma(\tilde{\mathbf{x}})</script></span>，代入sigmoid函数，为了确保该损失函数的稳定性，我们可以将<a href="#mjx-eqn-14"><span><span class="MathJax_Preview">(14)</span><script type="math/tex">(14)</script></span></a>整理为</p>
 <div class="overflow">\begin{align}
-   \mathcal{L} \left( \mathbf{y},~ \tilde{\mathbf{x}} \right) = \max(\tilde{\mathbf{x}}, \mathbf{0}) - \tilde{\mathbf{x}} \cdot \mathbf{y} + \log\left(1 + e^{-|\tilde{\mathbf{x}}|} \right).
+   \mathcal{L} \left( \mathbf{y},~ \tilde{\mathbf{x}} \right) = \mathrm{mean}\left[ \max(\tilde{\mathbf{x}}, \mathbf{0}) - \tilde{\mathbf{x}} \cdot \mathbf{y} + \log\left(1 + e^{-|\tilde{\mathbf{x}}|} \right)  \right].
 \end{align}</div>
 
 <details class="tip" open="open"><summary>提示</summary><p>这里交叉熵整理的推导过程参见<a href="https://www.tensorflow.org/api_docs/python/tf/nn/sigmoid_cross_entropy_with_logits">Tensorflow-API官方文档</a>。</p>
@@ -953,6 +968,27 @@
 <li>以双下划线开头的方法，如果不以双下划线结尾，则表示类级的私有方法，只有类内部的方法能调用这些方法，在类外部、包括继承的子类里都原则上不能调用（但其实也有办法调用），例如<code class="codehilite"><span class="k">def</span> <span class="nf">_alphaBeta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></code>；</li>
 <li>以双下划线同时开头和结尾的方法，一般是用来<span></span><strong>重写 (override)</strong><span></span>特殊功能，例如<code class="codehilite"><span class="k">def</span> <span class="fm">__getattribute__</span><span class="p">():</span></code>将重写获得类属性的方法。</li>
 </ul>
+<h3 id="tensorflow">Tensorflow的数据概念<a class="headerlink" href="#tensorflow" title="Permanent link">&para;</a></h3>
+<p>在Tensorflow中，我们把变量都称为“<span></span><strong>张量 (Tensor)</strong><span></span>”。这是因为我们有零维的标量，一维的向量，二维的矩阵，更高维的我们都称为张量。作为一个更大的概念，张量当然也可以用来包括标量、向量和矩阵了。在Tensorflow中，有的张量是<span></span><strong>可以训练 (trainable)</strong><span></span>的，有的则不是。比如一个张量的形状（指各维大小），当然可以是一个<code class="codehilite"><span class="o">&lt;</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span> <span class="s1">&#39;Shape:0&#39;</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,)</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int32</span><span class="o">&gt;</span></code>类型的张量，但它不是变量，当然就不可训练。我们也可以人为控制某些张量可以训练或不可以训练，但本节、乃至本章所介绍的凡是我们接触到的张量，都是可以训练的。</p>
+<p>特别地，对于神经网络而言，在网络内计算（或者说流动、传播）的一个n维数据，通常按照以下形式组织：</p>
+<div class="codehilite"><pre><span></span><span class="n">tensor</span><span class="p">[</span><span class="n">batch</span><span class="p">,</span> <span class="n">dim1</span><span class="p">,</span> <span class="n">dim2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">dimn</span><span class="p">,</span> <span class="n">channel</span><span class="p">]</span>
+</pre></div>
+
+<ul>
+<li>其中，第一个维度<code>batch</code>一定存在，它表示的是单个batch中的某一个样本。如果一个batch只有一个样本，那么<code>batch</code>只能取0。</li>
+<li>从<code>dim1</code>到<code>dimn</code>指的是实际的n维数据的各个维度；</li>
+<li><code>channel</code>指的是数据的通道，例如，一个二维RGB图像，每种颜色代表一个通道，因此有三个通道。<code>channel</code>通常用在卷积网络里，我们经常需要在深度卷积网络里不断增大通道数的同时，缩小数据尺寸。</li>
+<li>在某些特殊情况下，<code>channel</code>维度可以不存在，例如我们使用的是全连接层而不是卷积网络，<code>tf.keras.layer.Flatten</code>可以用来将一个有通道的张量压缩成一个没有通道的一维向量（但是注意<code>batch</code>维度仍然存在，不会被压缩）。</li>
+</ul>
+<p>因此，我们知道一个n维的数据，在神经网络中通常被描述为一个n+2维的矩阵，而一个一维向量，在卷积网络里是三维的：</p>
+<div class="codehilite"><pre><span></span><span class="n">vector</span><span class="p">[</span><span class="n">batch</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">channel</span><span class="p">]</span>
+</pre></div>
+
+<p>但是在全连接网络里，是二维的：</p>
+<div class="codehilite"><pre><span></span><span class="n">vector</span><span class="p">[</span><span class="n">batch</span><span class="p">,</span> <span class="n">channel</span><span class="p">]</span>
+</pre></div>
+
+<p>在本节，乃至本章里，我们还不讨论卷积网络，因此我们都是使用二维张量（一维向量组）作为我们的数据。</p>
 <h3 id="_9">数据生成<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
 <p>在本项目里，我们不需要扩展Tensorflow。但是，我们需要以随机生成数据代替数据集。因此，首先，通过以下代码定义数据生成器</p>
 <div class="superfences-tabs">
@@ -1218,6 +1254,34 @@ class st,ed styStart</div>
 <details class="info" open="open"><summary>须知</summary><p>这里<code>LABEL_SHAPE</code>和<code>INPUT_SHAPE</code>为两个宏变量，分别为输出和输入的向量维度。</p>
 </details>
 <p>我们使用<code>Dense</code>定义全连接层，它的用法请参照<a href="https://keras-zh.readthedocs.io/layers/core/#dense">这里</a>。由于我们已经知道<span><span class="MathJax_Preview">\mathbf{A}</span><script type="math/tex">\mathbf{A}</script></span>和<span><span class="MathJax_Preview">\mathbf{c}</span><script type="math/tex">\mathbf{c}</script></span>可能的取值范围，这里我们重定义了<span><span class="MathJax_Preview">\mathbf{W}</span><script type="math/tex">\mathbf{W}</script></span>和<span><span class="MathJax_Preview">\mathbf{b}</span><script type="math/tex">\mathbf{b}</script></span>的初始化方式。</p>
+<details class="info"><summary>信息: Dense API</summary><p><code class="codehilite"><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>指全连接层，其输入一组已知形状的向量，输出一组形状为<code>shape</code>的向量。可用的API如下：</p>
+<hr />
+<ul>
+<li><code>shape</code>: 正整数，输出空间维度。</li>
+<li><code>activation</code>: 激活函数。 若不指定，则不使用激活函数 (即，线性激活: <span><span class="MathJax_Preview">a(\mathbf{y}) = \mathbf{y}</span><script type="math/tex">a(\mathbf{y}) = \mathbf{y}</script></span>)。该函数可以定义为任何元素级操作的Tensorflow函数。</li>
+<li><code>use_bias</code>: 布尔值，该层是否使用偏置向量。<code class="codehilite"><span class="bp">True</span></code>则网络定义为<span><span class="MathJax_Preview">\mathbf{y} = \mathbf{W}\mathbf{x} + \mathbf{b}</span><script type="math/tex">\mathbf{y} = \mathbf{W}\mathbf{x} + \mathbf{b}</script></span>，<code class="codehilite"><span class="bp">False</span></code>则定义为<span><span class="MathJax_Preview">\mathbf{y} = \mathbf{W}\mathbf{x}</span><script type="math/tex">\mathbf{y} = \mathbf{W}\mathbf{x}</script></span>。</li>
+<li><code>kernel_initializer</code>: kernel 权值矩阵的初始化器，自定义的初始化器需要使用Keras后端API编写。</li>
+<li><code>bias_initializer</code>: 偏置向量的初始化器，同上。</li>
+<li><code>kernel_regularizer</code>: 运用到 kernel 权值矩阵的正则化函数，自定义的正则化函数需要使用Keras后端API编写。</li>
+<li><code>bias_regularizer</code>: 运用到偏置向的的正则化函数，同上。</li>
+<li><code>activity_regularizer</code>: 运用到层的输出的正则化函数，同上。</li>
+<li><code>kernel_constraint</code>: 运用到 kernel 权值矩阵的约束函数，只能使用Keras备选的几种方案，不能自定义。</li>
+<li><code>bias_constraint</code>: 运用到偏置向量的约束函数，同上。</li>
+</ul>
+</details>
+<details class="info"><summary>信息: model.compile API</summary><p><code class="codehilite"><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>在这里指的是顺序模型的编译函数，其可用的API如下：</p>
+<hr />
+<ul>
+<li><code>optimizer</code>: 优化器，可以使用Tensorflow内置的优化器。</li>
+<li><code>loss</code>: 损失函数，也是目标函数。顺序模型只有一个输出，因此只能传入一个损失函数。可以使用形式为<code class="codehilite"><span class="n">func</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span></code>的Tensorflow函数。</li>
+<li><code>metrics</code>: 测度函数，一般是一组函数，如果是一个函数则定义为<code class="codehilite"><span class="p">[</span><span class="n">func</span><span class="p">]</span></code>即可。自定义的测度函数目前还需要使用Keras后端API编写。</li>
+<li><code>loss_weights</code>: 损失的权重，顺序模型只有一个损失函数，因此只有一个权重，但要使用一维列表<code class="codehilite"><span class="p">[</span><span class="n">value</span><span class="p">]</span></code>定义。可以使用张量来控制可变权重。</li>
+<li><code>sample_weight_mode</code>: 按时间步采样权重，默认不提供。相比上面的损失权重，该选项会随着迭代次数使用不同的权重，因此输入的是二维列表。</li>
+<li><code>weighted_metrics</code>: 测度的权重，和损失权重类似，用来加给不同的测度函数。由于我们可以使用不只一个测度函数，这里的权重是个一维列表。</li>
+<li><code>target_tensors</code>: 默认情况下，Keras 将为模型的目标创建一个占位符，在训练过程中将使用目标数据。相反，如果你想使用自己的目标张量（反过来说，Keras在训练期间不会载入这些目标张量的外部 Numpy数据），您可以通过<code>target_tensors</code>参数指定它们。对于单输出的顺序模型，它应该是单个张量。</li>
+<li><code class="codehilite"><span class="o">**</span><span class="n">kwargs</span></code>: 其他参量，会传递给<code class="codehilite"><span class="n">tf</span><span class="o">.</span><span class="n">Session</span><span class="o">.</span><span class="n">run</span></code>。</li>
+</ul>
+</details>
 <p>另外，注意我们这里构造网络的时候有如下技巧：</p>
 <ul>
 <li>我们定义的网络输出是<span><span class="MathJax_Preview">\mathbf{W}\mathbf{x} + \mathbf{b}</span><script type="math/tex">\mathbf{W}\mathbf{x} + \mathbf{b}</script></span>，而非<span><span class="MathJax_Preview">\sigma(\mathbf{W}\mathbf{x} + \mathbf{b})</span><script type="math/tex">\sigma(\mathbf{W}\mathbf{x} + \mathbf{b})</script></span>。这是因为我们需要通过还未被激活的输出用来计算sigmoid交叉熵，亦即式<a href="#mjx-eqn-15"><span><span class="MathJax_Preview">(15)</span><script type="math/tex">(15)</script></span></a>；</li>
@@ -1261,6 +1325,48 @@ class st,ed styStart</div>
 </pre></div>
 </td></tr></table></div>
 </div>
+<details class="info"><summary>信息: model.fit API</summary><p><code class="codehilite"><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataSet</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>是训练函数，注意这个函数虽然支持输入一组<span><span class="MathJax_Preview">x,~y</span><script type="math/tex">x,~y</script></span>用来代替<code>dataSet</code>，我们还是建议在任何情况下都用dataSet馈送数据，以免内存中数据集占用过多。</p>
+<hr />
+<ul>
+<li><code>dataSet</code>: 数据集，其本身应当是一个<code>tf.data.Dataset</code>类型的类，或者是一个能不断迭代产生新数据的生成器。数据的<code>batch</code>大小由<code>dataSet</code>本身决定。</li>
+<li><code>epochs</code>: 整数，终止训练时经历的世代(轮次)数，通常一个epoch表示遍历整个数据集一回。</li>
+<li><code>verbose</code>: 0, 1或2。日志显示模式。 0=安静模式, 1=进度条, 2=每轮一行。默认是1。</li>
+<li><code>callbacks</code>: 回调器，它是<code>tf.keras.callbacks</code>模块下的类，用来在训练中进行记录保存和数据检查点更新。默认是<code>tf.keras.callbacks.History</code>。</li>
+<li><code>validation_split</code>: 在 0 和 1 之间浮动。用作验证集的训练数据的比例。模型将分出一部分不会被训练的验证数据，并将在每一轮结束时评估这些验证数据的误差和任何其他模型指标。验证数据是混洗之前 <code>x</code>和<code>y</code>数据的最后一部分样本中。</li>
+<li><code>validation_data</code>: 元组<code>(x_val，y_val)</code>或元组<code>(x_val，y_val，val_sample_weights)</code>，用来评估损失，以及在每轮结束时的任何模型度量指标。模型将不会在这个数据上进行训练。这个参数会覆盖 <code>validation_split</code>。</li>
+<li><code>shuffle</code>: 布尔值（是否在每轮迭代之前混洗数据）。当<code>steps_per_epoch</code>非<code class="codehilite"><span class="bp">None</span></code>时，这个参数无效。</li>
+<li><code>class_weight</code>: 可选的字典，用来映射类索引（整数）到权重（浮点）值，用于加权损失函数（仅在训练期间）。这可能有助于告诉模型 「更多关注」来自代表性不足的类的样本。</li>
+<li><code>sample_weight</code>: 用来给损失函数添加权重，作用类似<code>model.compile</code>的同一参数。</li>
+<li><code>initial_epoch</code>: 开始训练的轮次（有助于恢复之前的训练）。</li>
+<li><code>steps_per_epoch</code>: 在声明一个轮次完成并开始下一个轮次之前的总步数（样品批次）。使用TensorFlow数据张量等输入张量进行训练时，默认值<code class="codehilite"><span class="bp">None</span></code>等于数据集中样本的数量除以<code>batch</code>的大小，如果无法确定，则为1。</li>
+<li><code>validation_steps</code>: 只有在指定了<code>steps_per_epoch</code>时才有用。停止前要验证的总步数（批次样本）。</li>
+</ul>
+<hr />
+<p>该函数会返回<code>callbacks</code>定义的实例。</p>
+</details>
+<details class="info"><summary>信息 model.evaluate API</summary><p><code class="codehilite"><span class="n">model</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>是测试函数，需要传入<code>label</code>即<code>y</code>来验证性能。</p>
+<hr />
+<ul>
+<li><code>x</code>, <code>y</code>: <code>Numpy</code>数组，分别是输入和输出的真实参照值。</li>
+<li><code>batch_size</code>: 计算的<code>batch</code>大小，该函数会将输入的数据组拆分成许多<code>batch</code>分别计算，并组合起来，这个设定值对效果不产生影响，只影响计算过程。</li>
+<li><code>verbose</code>: 0, 1。日志显示模式。0=安静模式, 1=进度条。默认是1。</li>
+<li><code>sample_weight</code>: 用来给损失函数添加权重，作用类似<code>model.compile</code>的同一参数。</li>
+<li><code>steps</code>: 整数或<code class="codehilite"><span class="bp">None</span></code>。 声明评估结束之前的总步数（批次样本）。默认值<code class="codehilite"><span class="bp">None</span></code>。</li>
+</ul>
+<hr />
+<p>该函数会返回损失函数和测度（列表）。</p>
+</details>
+<details class="info"><summary>信息 model.predict API</summary><p><code class="codehilite"><span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>是预测函数，用在只知道输入<code>x</code>的场合。</p>
+<hr />
+<ul>
+<li><code>x</code>: <code>Numpy</code>数组，输入值。</li>
+<li><code>batch_size</code>: 计算的<code>batch</code>大小，该函数会将输入的数据组拆分成许多<code>batch</code>分别计算，并组合起来，这个设定值对效果不产生影响，只影响计算过程。</li>
+<li><code>verbose</code>: 0, 1。日志显示模式。0=安静模式, 1=进度条。默认是1。</li>
+<li><code>steps</code>: 整数或<code class="codehilite"><span class="bp">None</span></code>。 声明评估结束之前的总步数（批次样本）。默认值<code class="codehilite"><span class="bp">None</span></code>。</li>
+</ul>
+<hr />
+<p>该函数返回预测结果。</p>
+</details>
 <h3 id="_14">调试<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
 <p>首先，训练网络。我们随机生成<span><span class="MathJax_Preview">\mathbf{x} \mapsto \mathbf{y}:~\mathbb{R}^{10} \mapsto \mathbb{R}^6</span><script type="math/tex">\mathbf{x} \mapsto \mathbf{y}:~\mathbb{R}^{10} \mapsto \mathbb{R}^6</script></span>的线性变换，并且设置好数据集，给定噪声扰动为<span><span class="MathJax_Preview">\boldsymbol{\varepsilon} \sim \mathcal{N}(0,1)^6</span><script type="math/tex">\boldsymbol{\varepsilon} \sim \mathcal{N}(0,1)^6</script></span>。设定20个epoch，每个epoch迭代500次，每次馈入32个样本构成的batch，然后开始训练：</p>
 <div class="superfences-tabs">
@@ -1331,8 +1437,30 @@ Epoch <span class="m">20</span>/20
 <div class="superfences-tabs">
 <input name="__tabs_8" type="radio" id="__tab_8_0" checked="checked" />
 <label for="__tab_8_0">lin-cls.py</label>
-<div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-2</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">showCurve</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">],</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Cross entropy&#39;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">showCurve</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">log</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">xlabel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ylabel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">showCurve</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">],</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Cross entropy&#39;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 <span class="n">showCurve</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">],</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">)</span>
 </pre></div>
 </td></tr></table></div>
