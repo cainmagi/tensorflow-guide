@@ -706,18 +706,38 @@
 安装<a href="https://anaconda.org/patricksnape/opencv-gpu">opencv2</a>，但它的版本还停留在2.4.9，和opencv3的用法殊有不同，请读者注意这一点。</p>
 </details>
 <h3 id="tensorflow_1">安装预编译好的Tensorflow<a class="headerlink" href="#tensorflow_1" title="Permanent link">&para;</a></h3>
-<p>我们可以查看如下项目：</p>
-<p><a class="magiclink magiclink-github magiclink-repository" href="https://github.com/fo40225/tensorflow-windows-wheel" title="GitHub Repository: fo40225/tensorflow-windows-wheel">fo40225/tensorflow-windows-wheel</a></p>
-<p>该项目的维护者在不断根据Tensorflow的更新，预编译出适合不同版本的Tensorflow安装包。截至笔者写到这里为止，最新支持到r1.12版。我们选择对应的GPU版Tensorflow，并在虚环境下执行以下命令：</p>
-<div class="codehilite"><pre><span></span>pip install https://github.com/fo40225/tensorflow-windows-wheel/blob/master/1.12.0/py36/GPU/cuda100cudnn73sse2/tensorflow_gpu-1.12.0-cp36-cp36m-win_amd64.whl
+<p>可以通过</p>
+<div class="codehilite"><pre><span></span>pip install tensorflow-gpu<span class="o">==</span>
 </pre></div>
 
+<p>查看Tensorflow是否有官方发行的新版。当然，使用GPU的用户要特别注意最新版是否和你预装的驱动匹配，尤其是CUDA是否匹配，否则Tensorflow可能无法正常工作。</p>
+<p>在官方发行版不适合我们使用的时候，我们也可以查看如下第三方发行的项目：</p>
+<p><a class="magiclink magiclink-github magiclink-repository" href="https://github.com/fo40225/tensorflow-windows-wheel" title="GitHub Repository: fo40225/tensorflow-windows-wheel">fo40225/tensorflow-windows-wheel</a></p>
+<p>该项目的维护者在不断根据Tensorflow的更新，预编译出适合不同版本的Tensorflow安装包。截至笔者写到这里为止，最新支持到r1.12版。</p>
+<p>原则上来讲，我们选择尽可能新的版本。有时候官方发行版对CUDA的支持滞后，因此我们可以选择第三方版。无论选择哪种发行方，要安装Tensorflow，我们需要选择对应的GPU版，并在虚环境下执行以下命令：</p>
+<div class="superfences-tabs">
+<input name="__tabs_1" type="radio" id="__tab_1_0" checked="checked" />
+<label for="__tab_1_0">官方版</label>
+<div class="superfences-content"><div class="codehilite"><pre><span></span>pip install --upgrade tensorflow-gpu
+</pre></div></div>
+<input name="__tabs_1" type="radio" id="__tab_1_1" />
+<label for="__tab_1_1">第三方版</label>
+<div class="superfences-content"><div class="codehilite"><pre><span></span>pip install https://github.com/fo40225/tensorflow-windows-wheel/blob/master/1.12.0/py36/GPU/cuda100cudnn73sse2/tensorflow_gpu-1.12.0-cp36-cp36m-win_amd64.whl
+</pre></div></div>
+<input name="__tabs_1" type="radio" id="__tab_1_2" />
+<label for="__tab_1_2">第三方版(CPU AVX2加强)</label>
+<div class="superfences-content"><div class="codehilite"><pre><span></span>curl -o tensorflow_gpu-1.12.0-cp36-cp36m-win_amd64.7z.001 https://raw.githubusercontent.com/fo40225/tensorflow-windows-wheel/master/1.12.0/py36/GPU/cuda100cudnn73avx2/tensorflow_gpu-1.12.0-cp36-cp36m-win_amd64.7z.001
+curl -o tensorflow_gpu-1.12.0-cp36-cp36m-win_amd64.7z.002 https://raw.githubusercontent.com/fo40225/tensorflow-windows-wheel/master/1.12.0/py36/GPU/cuda100cudnn73avx2/tensorflow_gpu-1.12.0-cp36-cp36m-win_amd64.7z.002
+<span class="s2">&quot;C:/Program Files/7-Zip/7z.exe&quot;</span> x tensorflow_gpu-1.12.0-cp36-cp36m-win_amd64.7z.001 <span class="c1"># Note that you need to specify where your 7-zip gets installed.</span>
+pip install tensorflow_gpu-1.12.0-cp36-cp36m-win_amd64.whl
+</pre></div></div>
+</div>
 <p>等待一段时间后，安装将会结束。</p>
 <h2 id="hello-world_1">Hello world! 测试<a class="headerlink" href="#hello-world_1" title="Permanent link">&para;</a></h2>
 <p>撰写如下代码，保存到<code>hello-world.py</code>文件，</p>
 <div class="superfences-tabs">
-<input name="__tabs_1" type="radio" id="__tab_1_0" checked="checked" />
-<label for="__tab_1_0">Python</label>
+<input name="__tabs_2" type="radio" id="__tab_2_0" checked="checked" />
+<label for="__tab_2_0">Python</label>
 <div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
@@ -737,8 +757,8 @@
         <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Test calculation:&#39;</span><span class="p">,</span> <span class="n">sess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test_cal</span><span class="p">))</span>
 </pre></div>
 </td></tr></table></div>
-<input name="__tabs_1" type="radio" id="__tab_1_1" />
-<label for="__tab_1_1">Output</label>
+<input name="__tabs_2" type="radio" id="__tab_2_1" />
+<label for="__tab_2_1">Output</label>
 <div class="superfences-content"><div class="codehilite"><pre><span></span>Current Tensorflow version is: <span class="m">1</span>.12.0
 Test string:      b<span class="s1">&#39;Hello, world!&#39;</span>
 Test calculation: -1948.6578

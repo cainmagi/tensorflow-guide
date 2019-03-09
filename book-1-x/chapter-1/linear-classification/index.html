@@ -869,7 +869,7 @@
 </div>
 <p>使用sigmoid函数的一大好处是，它的导数求解非常简单，很适合用来做神经网络这样一个复杂模型的激活函数。注意虽然<span><span class="MathJax_Preview">\sigma(\mathbf{x})</span><script type="math/tex">\sigma(\mathbf{x})</script></span>和<span><span class="MathJax_Preview">\mathbf{x}</span><script type="math/tex">\mathbf{x}</script></span>都是向量，这意味着导数是Jacobian矩阵，但由于<span><span class="MathJax_Preview">\sigma</span><script type="math/tex">\sigma</script></span>是一个对<span><span class="MathJax_Preview">\mathbf{x}</span><script type="math/tex">\mathbf{x}</script></span>各元素独立的解析函数，这个Jacobian矩阵实际上是一个对角矩阵，对角线上第j个元素的值为</p>
 <div class="overflow">\begin{align}
-   \left. \frac{ \partial \sigma(x) }{ \partial x } \right|_{x=x_j} = \left. - e^{-x} \left( - \frac{1}{\left( 1+e^{-x} \right)^2} \right) \right|_{x=x_j} = - \sigma(x_j) \sigma(1 - x_j).
+   \left. \frac{ \partial \sigma(x) }{ \partial x } \right|_{x=x_j} = \left. - e^{-x} \left( - \frac{1}{\left( 1+e^{-x} \right)^2} \right) \right|_{x=x_j} = - \sigma(x_j) ( 1 - \sigma(x_j) ).
 \end{align}</div>
 
 <p>可见，该函数的导数和计算函数本身的复杂度相若，可以做到快速求导。</p>
@@ -894,8 +894,8 @@
     \end{aligned}
 \end{equation}</div>
 
-<p>注意这里的概率向量的含义是，其中第i个元素表明第i个超平面分类结果的确信程度。</p>
-<p>然而，这个概率只是分类器对分类结果的确信程度，却并非是分类准确度的概率，实际上，分类准确度的概率，应当表述为</p>
+<p>注意这里的概率向量的含义是，其中第i个元素表明第i个超平面分类结果的<span></span><strong>确信程度</strong><span></span>。</p>
+<p>然而，这个概率只是分类器对分类结果的确信程度，却并非是分类准确度的概率，实际上，分类<span></span><strong>准确度</strong><span></span>的概率，应当表述为</p>
 <div class="overflow">\begin{equation}
     \begin{aligned}
         \mathbf{p}(\mathbf{y}|\mathbf{x};~\boldsymbol{\Theta}) &amp;= \mathbf{p}(y_i=1|\mathbf{x};~\boldsymbol{\Theta})^{\mathbf{y}} \mathbf{p}(y_i=0|\mathbf{x};~\boldsymbol{\Theta})^{1-\mathbf{y}}\\
@@ -905,7 +905,7 @@
 
 <details class="warning" open="open"><summary>注意</summary><p>这里<span><span class="MathJax_Preview">\mathbf{x}^{\mathbf{y}}</span><script type="math/tex">\mathbf{x}^{\mathbf{y}}</script></span>表示的是对每个元素一一求取指数，即函数第i个元素的返回值应当为<span><span class="MathJax_Preview">{x_i}^{y_i}</span><script type="math/tex">{x_i}^{y_i}</script></span>。</p>
 </details>
-<p>我们使用真实值<span><span class="MathJax_Preview">\mathbf{y}</span><script type="math/tex">\mathbf{y}</script></span>作为指数给概率向量加权。当<span><span class="MathJax_Preview">\mathbf{y}=1</span><script type="math/tex">\mathbf{y}=1</script></span>时，以预测值为1的可信度作为概率；反之则以预测值为0的可信度作为概率。这就是最大似然估计方法。至此，我们可以写出似然估计函数</p>
+<p>我们使用真实值<span><span class="MathJax_Preview">\mathbf{y}</span><script type="math/tex">\mathbf{y}</script></span>作为指数给概率向量加权。当<span><span class="MathJax_Preview">\mathbf{y}=1</span><script type="math/tex">\mathbf{y}=1</script></span>时，乘积项的第二个因子消去，该函数退化为以预测值为1的可信度<span><span class="MathJax_Preview">\mathbf{p}(y_i=1|\mathbf{x};~\boldsymbol{\Theta})</span><script type="math/tex">\mathbf{p}(y_i=1|\mathbf{x};~\boldsymbol{\Theta})</script></span>；反之则第一个因子消去，退化为以预测值为0的可信度<span><span class="MathJax_Preview">\mathbf{p}(y_i=0|\mathbf{x};~\boldsymbol{\Theta})</span><script type="math/tex">\mathbf{p}(y_i=0|\mathbf{x};~\boldsymbol{\Theta})</script></span>。这就是最大似然估计方法。至此，我们可以写出似然估计函数</p>
 <div class="overflow">\begin{align}
     L(\boldsymbol{\Theta}) = \mathbf{p}(\mathbf{y}^{(k)}|\mathbf{x}^{(k)};~\boldsymbol{\Theta}).
 \end{align}</div>
@@ -1218,11 +1218,7 @@ class st,ed styStart</div>
 19
 20
 21
-22
-23
-24
-25
-26</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">construct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+22</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">construct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Construct a linear model and set the optimizer as Adam</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -1231,23 +1227,19 @@ class st,ed styStart</div>
     <span class="bp">self</span><span class="o">.</span><span class="n">dense1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">LABEL_SHAPE</span><span class="p">,</span> <span class="n">use_bias</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">INPUT_SHAPE</span><span class="p">,),</span> 
                                 <span class="n">kernel_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">RandomNormal</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">10.0</span><span class="p">),</span> 
                                 <span class="n">bias_initializer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">initializers</span><span class="o">.</span><span class="n">Constant</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> 
-                                <span class="n">activation</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+                                <span class="n">activation</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dense1</span><span class="p">)</span>
 
     <span class="c1"># Set optimizer</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
         <span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">AdamOptimizer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lr</span><span class="p">),</span>
-        <span class="n">loss</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">,</span>
-        <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span><span class="p">]</span>
+        <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">BinaryCrossentropy</span><span class="p">(),</span> 
+        <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">accuracy</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">metrics</span><span class="o">.</span><span class="n">BinaryAccuracy</span><span class="p">()]</span>
     <span class="p">)</span>
 
 <span class="nd">@staticmethod</span>
-<span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">sigmoid_cross_entropy_with_logits</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="n">y_true</span><span class="p">,</span> <span class="n">logits</span><span class="o">=</span><span class="n">y_pred</span><span class="p">)</span>
-
-<span class="nd">@staticmethod</span>
 <span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">y_pred</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">backend</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)))</span>
 </pre></div>
 </td></tr></table></div>
 </div>
@@ -1284,12 +1276,12 @@ class st,ed styStart</div>
 </details>
 <p>另外，注意我们这里构造网络的时候有如下技巧：</p>
 <ul>
-<li>我们定义的网络输出是<span><span class="MathJax_Preview">\mathbf{W}\mathbf{x} + \mathbf{b}</span><script type="math/tex">\mathbf{W}\mathbf{x} + \mathbf{b}</script></span>，而非<span><span class="MathJax_Preview">\sigma(\mathbf{W}\mathbf{x} + \mathbf{b})</span><script type="math/tex">\sigma(\mathbf{W}\mathbf{x} + \mathbf{b})</script></span>。这是因为我们需要通过还未被激活的输出用来计算sigmoid交叉熵，亦即式<a href="#mjx-eqn-15"><span><span class="MathJax_Preview">(15)</span><script type="math/tex">(15)</script></span></a>；</li>
-<li>我们通过静态方法，直接调用Tensorflow自带的<a href="https://www.tensorflow.org/api_docs/python/tf/nn/sigmoid_cross_entropy_with_logits">sigmoid交叉熵</a>函数来作为Keras模型的损失函数<code>self..loss</code>；</li>
-<li>我们通过静态方法，调用Keras的后端API，自己定义了预测准确度的测度函数<code>self.accuracy</code>；</li>
+<li>Tensorflow在导入Keras模式以后，已经不再使用<a href="#mjx-eqn-15"><span><span class="MathJax_Preview">(15)</span><script type="math/tex">(15)</script></span></a>的形式定义<a href="https://www.tensorflow.org/api_docs/python/tf/nn/sigmoid_cross_entropy_with_logits">sigmoid交叉熵</a>，而是采取更通用的定义<a href="#mjx-eqn-14"><span><span class="MathJax_Preview">(14)</span><script type="math/tex">(14)</script></span></a>；</li>
+<li>我们使用Tensorflow重新封装过的类，<a href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryCrossentropy">二分类交叉熵 (<code>BinaryCrossentropy</code>)</a>来作为Keras模型的损失函数<code>self.loss</code>，该函数与<a href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/CategoricalCrossentropy">多分类交叉熵 (<code>CategoricalCrossentropy</code>)</a>不同，乃是对两组对比张量的每个元素分别计算交叉熵，再求取均值，正符合本应用的需求；</li>
+<li>我们通过静态方法，调用Keras的后端API，自己定义了预测准确度的测度函数<code>self.accuracy</code>，同时也使用另一个来自Tensorflow封装好的测度类<a href="https://www.tensorflow.org/api_docs/python/tf/keras/metrics/BinaryAccuracy">二分类准确度 (<code>BinaryAccuracy</code>)</a>，这是为了比照两个准确度的区别，以便我们更好理解该测度类；</li>
 <li>我们将网络层的关键字<code>self.dense1</code>保留在了实例中，这是为了确保接下来我们能通过实例抽取该层的参数。</li>
 </ul>
-<p>之所以煞费周折地进行这些处理，盖因为Keras的内建API里目前还没有提供对互不相斥的多分类的支持。例如，无论是<code>tf.keras.metrics.categorical_accuracy</code>还是<code>tf.keras.metrics.categorical_crossentropy</code>，都要求分类的真实值为one-hot类型的向量组，因而它们只适合用在softmax分类器上。为了解决这一问题，我们自己实现了sigmoid分类器。</p>
+<p>需要注意的是，由于<a href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/BinaryCrossentropy">二分类交叉熵</a>，<a href="https://www.tensorflow.org/api_docs/python/tf/keras/metrics/BinaryAccuracy">二分类准确度</a>和<a href="https://www.tensorflow.org/api_docs/python/tf/keras/losses/CategoricalCrossentropy">多分类交叉熵</a>等都是类（从它们的定义都是大写字母开头也可以看出来），因此我们需要在使用的时候后面加上括号以实例化；由于这些类都定义了<code>__call__</code>方法，我们可以像使用函数一样使用它们的实例。</p>
 <h4 id="_13">训练和测试方法<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
 <p>最后定义的式训练和测试方法。由于我们目前的project还比较简单，关于这两部分都直接调用现有的API即可。使用的API在之前已经说明。<code>model.fit</code>在没有额外设置的情况下，默认会返回一个<a href="https://keras-zh.readthedocs.io/callbacks/#history">History回调器</a>；<code>model.evaluate</code>返回的是测试样本给出的损失函数和准确值测度。<code>model.predict</code>返回的是测试样本给出的网络输出。详情请参照<a href="https://keras-zh.readthedocs.io/models/sequential/">顺序模型API</a>。</p>
 <div class="superfences-tabs">
@@ -1379,7 +1371,9 @@ class st,ed styStart</div>
 5
 6
 7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="n">INPUT_SHAPE</span><span class="p">,</span> <span class="n">LABEL_SHAPE</span><span class="p">])</span>
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="c1"># Initialization</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="n">INPUT_SHAPE</span><span class="p">,</span> <span class="n">LABEL_SHAPE</span><span class="p">])</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">LABEL_SHAPE</span><span class="p">])</span>
 <span class="n">dataSet</span> <span class="o">=</span> <span class="n">dp</span><span class="o">.</span><span class="n">TestDataSet</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
 <span class="n">dataSet</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">batch</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
@@ -1392,76 +1386,60 @@ class st,ed styStart</div>
 <input name="__tabs_7" type="radio" id="__tab_7_1" />
 <label for="__tab_7_1">Output</label>
 <div class="superfences-content"><div class="codehilite"><pre><span></span>Epoch <span class="m">1</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 3s 5ms/step - loss: <span class="m">48</span>.2269 - accuracy: <span class="m">0</span>.5458
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 3ms/step - loss: <span class="m">6</span>.3005 - accuracy: <span class="m">0</span>.5884 - binary_accuracy: <span class="m">0</span>.5884
 Epoch <span class="m">2</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">25</span>.5149 - accuracy: <span class="m">0</span>.6491
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">5</span>.4671 - accuracy: <span class="m">0</span>.6407 - binary_accuracy: <span class="m">0</span>.6407
 Epoch <span class="m">3</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">11</span>.9822 - accuracy: <span class="m">0</span>.7607
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">4</span>.5711 - accuracy: <span class="m">0</span>.6957 - binary_accuracy: <span class="m">0</span>.6957
 Epoch <span class="m">4</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">5</span>.6580 - accuracy: <span class="m">0</span>.8513
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">3</span>.6789 - accuracy: <span class="m">0</span>.7519 - binary_accuracy: <span class="m">0</span>.7519
 Epoch <span class="m">5</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">2</span>.7230 - accuracy: <span class="m">0</span>.9106
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">2</span>.7101 - accuracy: <span class="m">0</span>.8127 - binary_accuracy: <span class="m">0</span>.8127
 Epoch <span class="m">6</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">1</span>.1082 - accuracy: <span class="m">0</span>.9462
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">2</span>.0059 - accuracy: <span class="m">0</span>.8627 - binary_accuracy: <span class="m">0</span>.8627
 Epoch <span class="m">7</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.3278 - accuracy: <span class="m">0</span>.9708
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">1</span>.6403 - accuracy: <span class="m">0</span>.8894 - binary_accuracy: <span class="m">0</span>.8894
 Epoch <span class="m">8</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 3ms/step - loss: <span class="m">0</span>.0618 - accuracy: <span class="m">0</span>.9878
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">1</span>.3663 - accuracy: <span class="m">0</span>.9066 - binary_accuracy: <span class="m">0</span>.9066
 Epoch <span class="m">9</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0149 - accuracy: <span class="m">0</span>.9963
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">1</span>.0466 - accuracy: <span class="m">0</span>.9274 - binary_accuracy: <span class="m">0</span>.9274
 Epoch <span class="m">10</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0121 - accuracy: <span class="m">0</span>.9979
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.8377 - accuracy: <span class="m">0</span>.9418 - binary_accuracy: <span class="m">0</span>.9418
 Epoch <span class="m">11</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0124 - accuracy: <span class="m">0</span>.9976
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.6465 - accuracy: <span class="m">0</span>.9546 - binary_accuracy: <span class="m">0</span>.9546
 Epoch <span class="m">12</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0121 - accuracy: <span class="m">0</span>.9978
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.4492 - accuracy: <span class="m">0</span>.9667 - binary_accuracy: <span class="m">0</span>.9667
 Epoch <span class="m">13</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0121 - accuracy: <span class="m">0</span>.9973
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.2795 - accuracy: <span class="m">0</span>.9779 - binary_accuracy: <span class="m">0</span>.9779
 Epoch <span class="m">14</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0120 - accuracy: <span class="m">0</span>.9974
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.1624 - accuracy: <span class="m">0</span>.9861 - binary_accuracy: <span class="m">0</span>.9861
 Epoch <span class="m">15</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0121 - accuracy: <span class="m">0</span>.9970
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0680 - accuracy: <span class="m">0</span>.9926 - binary_accuracy: <span class="m">0</span>.9926
 Epoch <span class="m">16</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0116 - accuracy: <span class="m">0</span>.9971
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0128 - accuracy: <span class="m">0</span>.9971 - binary_accuracy: <span class="m">0</span>.9971
 Epoch <span class="m">17</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0120 - accuracy: <span class="m">0</span>.9967
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0055 - accuracy: <span class="m">0</span>.9981 - binary_accuracy: <span class="m">0</span>.9981
 Epoch <span class="m">18</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 3ms/step - loss: <span class="m">0</span>.0114 - accuracy: <span class="m">0</span>.9971
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0052 - accuracy: <span class="m">0</span>.9986 - binary_accuracy: <span class="m">0</span>.9986
 Epoch <span class="m">19</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0114 - accuracy: <span class="m">0</span>.9969
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0055 - accuracy: <span class="m">0</span>.9981 - binary_accuracy: <span class="m">0</span>.9981
 Epoch <span class="m">20</span>/20
-<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0113 - accuracy: <span class="m">0</span>.9970
+<span class="m">500</span>/500 <span class="o">[==============================]</span> - 1s 2ms/step - loss: <span class="m">0</span>.0049 - accuracy: <span class="m">0</span>.9985 - binary_accuracy: <span class="m">0</span>.9985
 </pre></div></div>
 </div>
 <p>接下来，从训练返回的<code>History</code>类型的回调器中抽取对loss和accuracy的记录。</p>
 <div class="superfences-tabs">
 <input name="__tabs_8" type="radio" id="__tab_8_0" checked="checked" />
 <label for="__tab_8_0">lin-cls.py</label>
-<div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
- 2
- 3
- 4
- 5
- 6
- 7
- 8
- 9
-10
-11
-12
-13</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">showCurve</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">log</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">xlabel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">ylabel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="n">showCurve</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">],</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Cross entropy&#39;</span><span class="p">,</span> <span class="n">log</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">showCurve</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">],</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;epoch&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">)</span>
+<div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><span class="c1"># Show records</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;loss&#39;</span><span class="p">]),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;epoch&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Cross entropy&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;self defined&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">epoch</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s1">&#39;binary_accuracy&#39;</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;from tensorflow&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;epoch&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </td></tr></table></div>
 <input name="__tabs_8" type="radio" id="__tab_8_1" />
@@ -1469,6 +1447,7 @@ Epoch <span class="m">20</span>/20
 <div class="superfences-content"><div class="overflow"><p><img alt="交叉熵损失函数" class="img-fluid" src="../../../assets/images/book-1-x/lincls-loss.svg" tag="2" title="交叉熵损失函数"></p>
 <p><img alt="准确度测度" class="img-fluid" src="../../../assets/images/book-1-x/lincls-accu.svg" tag="2" title="准确度测度"></p></div></div>
 </div>
+<p>结果显示，我们自定义的准确度测度和Tensorflow内置的<a href="https://www.tensorflow.org/api_docs/python/tf/keras/metrics/BinaryAccuracy">二分类准确度</a>完全相同，这说明其本身的定义就是求取所有元素阈值化后，各自分类结果是否正确的平均值。这个实验也让我们对自定义测度函数有了一定的认识。</p>
 <p>重新设定数据集的产生方式，变为每个batch含10个样本。使用这组重新随机生成的数据测试网络输出，</p>
 <div class="superfences-tabs">
 <input name="__tabs_9" type="radio" id="__tab_9_0" checked="checked" />
@@ -1489,7 +1468,7 @@ Epoch <span class="m">20</span>/20
 <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">dataSet</span><span class="p">)</span>
 
 <span class="c1"># Check the testing results</span>
-<span class="n">yp</span> <span class="o">=</span> <span class="n">dp</span><span class="o">.</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+<span class="n">yp</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">)</span>
 <span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;True class&#39;</span><span class="p">)</span>
@@ -1500,7 +1479,11 @@ Epoch <span class="m">20</span>/20
 </td></tr></table></div>
 <input name="__tabs_9" type="radio" id="__tab_9_1" />
 <label for="__tab_9_1">Output</label>
-<div class="superfences-content"><div class="overflow"><p><img alt="y测量值效果" class="img-fluid" src="../../../assets/images/book-1-x/lincls-res.png" tag="3" title="y测量值效果"></p></div></div>
+<div class="superfences-content"><div class="overflow"><div class="codehilite"><pre><span></span>Evaluated loss <span class="o">(</span>losses.BinaryCrossentropy<span class="o">)</span>  <span class="o">=</span> <span class="m">0</span>.0023145806044340134
+Evaluated accuracy <span class="o">(</span>self defined<span class="o">)</span>           <span class="o">=</span> <span class="m">1</span>.0
+Evaluated accuracy <span class="o">(</span>metrics.BinaryAccuracy<span class="o">)</span> <span class="o">=</span> <span class="m">1</span>.0
+</pre></div>
+<p><img alt="y测量值效果" class="img-fluid" src="../../../assets/images/book-1-x/lincls-res.png" tag="3" title="y测量值效果"></p></div></div>
 </div>
 <p>注意我们未对测量的结果阈值化，因此显示出来的测量结果和理想值略有差别，但从图可知，阈值化后则测量结果全部准确。</p>
 <p>通过抽取<code>h.dense1</code>的参数，我们可以对比<span><span class="MathJax_Preview">\mathbf{A}</span><script type="math/tex">\mathbf{A}</script></span>和<span><span class="MathJax_Preview">\mathbf{W}</span><script type="math/tex">\mathbf{W}</script></span>，以及<span><span class="MathJax_Preview">\mathbf{c}</span><script type="math/tex">\mathbf{c}</script></span>和<span><span class="MathJax_Preview">\mathbf{b}</span><script type="math/tex">\mathbf{b}</script></span>，</p>
@@ -1536,7 +1519,7 @@ Epoch <span class="m">20</span>/20
 <p><img alt="训练得到的线性变换矩阵W" class="img-fluid" src="../../../assets/images/book-1-x/lincls-W.png" tag="4" title="训练得到的线性变换矩阵W"></p>
 <p><img alt="对比偏置c, b" class="img-fluid" src="../../../assets/images/book-1-x/lincls-cb.svg" tag="4" title="对比偏置c, b"></p></div></div>
 </div>
-<p>可以发现，虽然我们训练的分类器十分有效，但其权值和预期的<span><span class="MathJax_Preview">\mathbf{A}</span><script type="math/tex">\mathbf{A}</script></span>, <span><span class="MathJax_Preview">\mathbf{c}</span><script type="math/tex">\mathbf{c}</script></span>并不相同。这是由于我们训练的样本加入了噪声。这种技术常用于神经网络的训练，被认为是一种提高鲁棒性、减小过拟合、避免不稳定解的一个有效手段。可以看出真实值<span><span class="MathJax_Preview">\mathbf{A}</span><script type="math/tex">\mathbf{A}</script></span>存在偏高值，但<span><span class="MathJax_Preview">\mathbf{W}</span><script type="math/tex">\mathbf{W}</script></span>的数值更加均匀。</p>
+<p>可以发现，虽然我们训练的分类器十分有效，但其权值和预期的<span><span class="MathJax_Preview">\mathbf{A}</span><script type="math/tex">\mathbf{A}</script></span>, <span><span class="MathJax_Preview">\mathbf{c}</span><script type="math/tex">\mathbf{c}</script></span>并不完全相同。这是由于sigmoid函数激活的特性，使得当预测值偏向最小或最大的情况下，<span><span class="MathJax_Preview">|\sigma(x)| \rightarrow 1</span><script type="math/tex">|\sigma(x)| \rightarrow 1</script></span>，根据<a href="#mjx-eqn-7"><span><span class="MathJax_Preview">(7)</span><script type="math/tex">(7)</script></span></a>，可知其梯度<span><span class="MathJax_Preview">|\sigma(x)(1-\sigma(x))| \rightarrow 0</span><script type="math/tex">|\sigma(x)(1-\sigma(x))| \rightarrow 0</script></span>，因此那些分类结果已经比较确信的样本，其梯度消失，对训练网络的影响忽略不计（这是合理的，因为我们不希望极端样本干扰结果，更希望对分类结果不确切的样本进行训练）。故而，我们虽然可以求解出这个分类问题，但求解到的<span><span class="MathJax_Preview">\mathbf{W}</span><script type="math/tex">\mathbf{W}</script></span>, <span><span class="MathJax_Preview">\mathbf{b}</span><script type="math/tex">\mathbf{b}</script></span>不会回归到<span><span class="MathJax_Preview">\mathbf{A}</span><script type="math/tex">\mathbf{A}</script></span>, <span><span class="MathJax_Preview">\mathbf{c}</span><script type="math/tex">\mathbf{c}</script></span>上。关于回归问题，我们会在下一节进一步讨论。</p>
                 
                   
                     <h2 id="__source">来源</h2>
