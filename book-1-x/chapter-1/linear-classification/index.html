@@ -920,7 +920,7 @@
 
 <p>我们最终的目的是要最大化似然函数，亦即<span><span class="MathJax_Preview">\mathbf{W},~\mathbf{b} = \arg\max\limits_{\boldsymbol{\Theta}} l(\boldsymbol{\Theta})</span><script type="math/tex">\mathbf{W},~\mathbf{b} = \arg\max\limits_{\boldsymbol{\Theta}} l(\boldsymbol{\Theta})</script></span>，这等价于最小化<span><span class="MathJax_Preview">-l(\boldsymbol{\Theta})</span><script type="math/tex">-l(\boldsymbol{\Theta})</script></span>。对比<a href="#mjx-eqn-8"><span><span class="MathJax_Preview">(8)</span><script type="math/tex">(8)</script></span></a>和<a href="#mjx-eqn-9"><span><span class="MathJax_Preview">(9)</span><script type="math/tex">(9)</script></span></a>，于是我们可以定义交叉熵为</p>
 <div class="overflow">\begin{align}
-   \mathcal{L} \left( \mathbf{y},~ \tilde{\mathbf{y}} \right) = \mathrm{mean}\left[ \mathbf{y} \cdot \log\left( \tilde{\mathbf{y}} \right) + \left(1 - \mathbf{y} \right) \cdot \log\left(1 - \tilde{\mathbf{y}} \right) \right].
+   \mathcal{L} \left( \mathbf{y},~ \tilde{\mathbf{y}} \right) = - \mathrm{mean}\left[ \mathbf{y} \cdot \log\left( \tilde{\mathbf{y}} \right) + \left(1 - \mathbf{y} \right) \cdot \log\left(1 - \tilde{\mathbf{y}} \right) \right].
 \end{align}</div>
 
 <p>注意这里我们使用<span><span class="MathJax_Preview">\mathrm{mean}\left[ \cdot \right]</span><script type="math/tex">\mathrm{mean}\left[ \cdot \right]</script></span>表示求取一个向量所有元素的平均值。实际上，Tensorflow允许我们定义损失函数的输出为一个和输出向量维度相同的向量，Tensorflow自带的交叉熵也是这样定义的。实际应用时，Tensorflow会自动在向量维度上求均值，并压缩成上述<a href="#mjx-eqn-14"><span><span class="MathJax_Preview">(14)</span><script type="math/tex">(14)</script></span></a>的形式。</p>
