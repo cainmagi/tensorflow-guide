@@ -6,11 +6,16 @@
 # Yuchen Jin @ cainmagi@gmail.com
 # Requirements: (Pay attention to version)
 #   python 3.6
-#   tensorflow r1.12+
+#   tensorflow r1.13+
 #   numpy, matplotlib
 # Linear classification demo for Tensroflow.
 # Use logistic regression to learn the best W,b for
 #    y ~ W x + b.
+# Version: 1.10 # 2019/3/9
+# Comments:
+#   Upgrade the API version from r1.12 to r1.13.
+#   The modifications are mainly about definitions
+#   of the losses and metrics.
 # Version: 1.00 # 2019/3/4
 # Comments:
 #   Create this project.
@@ -51,23 +56,19 @@ class LinClsHandle:
         self.dense1 = tf.keras.layers.Dense(LABEL_SHAPE, use_bias=True, input_shape=(INPUT_SHAPE,), 
                                   kernel_initializer=tf.keras.initializers.RandomNormal(0.0, stddev=10.0), 
                                   bias_initializer=tf.keras.initializers.Constant(2), 
-                                  activation=None)
+                                  activation=tf.nn.sigmoid)
         self.model.add(self.dense1)
         
         # Set optimizer
         self.model.compile(
             optimizer=tf.train.AdamOptimizer(self.lr),
-            loss=self.loss,
-            metrics=[self.accuracy]
+            loss=tf.keras.losses.BinaryCrossentropy(), 
+            metrics=[self.accuracy, tf.keras.metrics.BinaryAccuracy()]
         )
-    
-    @staticmethod
-    def loss(y_true, y_pred):
-        return tf.nn.sigmoid_cross_entropy_with_logits(labels=y_true, logits=y_pred)
-    
+
     @staticmethod
     def accuracy(y_true, y_pred):
-        return tf.keras.backend.mean(tf.keras.backend.equal(y_true, tf.keras.backend.round(tf.keras.backend.sigmoid(y_pred))))
+        return tf.keras.backend.mean(tf.keras.backend.equal(y_true, tf.keras.backend.round(y_pred)))
     
     def train(self, dataSet):
         '''
@@ -79,25 +80,15 @@ class LinClsHandle:
         '''
         Use (data, label) pairs to test the results.
         '''
-        loss, accu = self.model.evaluate(data, labels)
-        print('Evaluated loss     =', loss)
-        print('Evaluated accuracy =', accu)
+        loss, accu, binaccu = self.model.evaluate(data, labels)
+        print('Evaluated loss (losses.BinaryCrossentropy)  =', loss)
+        print('Evaluated accuracy (self defined)           =', accu)
+        print('Evaluated accuracy (metrics.BinaryAccuracy) =', accu)
         return self.model.predict(data)
         
 
 if __name__ == '__main__':
-
-    def showCurve(x, y, xlabel=None, ylabel=None, log=False):
-        if log:
-            plt.semilogy(x, y)
-        else:
-            plt.plot(x, y)
-        if xlabel is not None:
-            plt.xlabel(xlabel)
-        if ylabel is not None:
-            plt.ylabel(ylabel)
-        plt.gcf().set_size_inches(5, 5), plt.show()
-        
+    # Initialization
     A = np.random.normal(0, 10, [INPUT_SHAPE, LABEL_SHAPE])
     c = np.random.uniform(1, 3, [1, LABEL_SHAPE])
     dataSet = dp.TestDataSet(10, A, c)
@@ -106,15 +97,19 @@ if __name__ == '__main__':
     h = LinClsHandle(learning_rate=0.01, epoch=20, steppe=500)
     h.construct()
     record = h.train(iter(dataSet))
-    showCurve(record.epoch, record.history['loss'], xlabel='epoch', ylabel='Cross entropy', log=True)
-    showCurve(record.epoch, record.history['accuracy'], xlabel='epoch', ylabel='Accuracy')
+    
+    # Show records
+    plt.semilogy(record.epoch, record.history['loss']), plt.xlabel('epoch'), plt.ylabel('Cross entropy')
+    plt.gcf().set_size_inches(5, 5), plt.show()
+    plt.plot(record.epoch, record.history['accuracy'], label='self defined'), plt.plot(record.epoch, record.history['binary_accuracy'], label='from tensorflow'), plt.xlabel('epoch'), plt.ylabel('Accuracy'), plt.legend()
+    plt.gcf().set_size_inches(5, 5), plt.show()
     
     # Generate a group of testing samples:
     dataSet.config(batch=10)
     x, y = next(dataSet)
     
     # Check the testing results
-    yp = dp.sigmoid(h.test(x, y))
+    yp = h.test(x, y)
     _, (ax1, ax2) = plt.subplots(1, 2)
     ax1.imshow(y, interpolation='nearest', aspect='auto')
     ax1.set_title('True class')

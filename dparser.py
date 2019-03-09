@@ -6,11 +6,14 @@
 # Yuchen Jin @ cainmagi@gmail.com
 # Requirements: (Pay attention to version)
 #   python 3.6
-#   tensorflow r1.12+
+#   tensorflow r1.13+
 #   numpy, matplotlib
 # A project for generating data.
 # Use logistic regression to learn the best W,b for
 #    y ~ W x + b.
+# Version: 1.10 # 2019/3/9
+# Comments:
+#   Remove the sigmoid function in this file.
 # Version: 1.00 # 2019/3/4
 # Comments:
 #   Create this project.
@@ -20,9 +23,6 @@
 #import tensorflow as tf
 import numpy as np
 #import matplotlib.pyplot as plt
-
-def sigmoid(x):
-    return 1 / (1 + np.exp(-x))
 
 class TestDataSet:
     '''

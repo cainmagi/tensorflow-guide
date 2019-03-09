@@ -20,6 +20,10 @@ python lin-cls.py
 
 # Update records
 
+## 1.1 @ 03/09/2019
+
+Upgrade the API version from r1.12 to r1.13.The modifications are mainly about definitions of the losses and metrics.
+
 ## 1.0 @ 03/05/2019
 
 Create this project.
