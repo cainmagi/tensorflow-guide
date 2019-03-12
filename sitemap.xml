@@ -2,32 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://cainmagi.github.io/tensorflow-guide/</loc>
-     <lastmod>2019-03-09</lastmod>
+     <lastmod>2019-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://cainmagi.github.io/tensorflow-guide/book-1-x/chapter-1/</loc>
-     <lastmod>2019-03-09</lastmod>
+     <lastmod>2019-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://cainmagi.github.io/tensorflow-guide/book-1-x/chapter-1/hello-world/</loc>
-     <lastmod>2019-03-09</lastmod>
+     <lastmod>2019-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://cainmagi.github.io/tensorflow-guide/book-1-x/chapter-1/linear-classification/</loc>
-     <lastmod>2019-03-09</lastmod>
+     <lastmod>2019-03-12</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    <url>
+     <loc>https://cainmagi.github.io/tensorflow-guide/book-1-x/chapter-1/linear-regression/</loc>
+     <lastmod>2019-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://cainmagi.github.io/tensorflow-guide/release-notes/</loc>
-     <lastmod>2019-03-09</lastmod>
+     <lastmod>2019-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://cainmagi.github.io/tensorflow-guide/licenses/</loc>
-     <lastmod>2019-03-09</lastmod>
+     <lastmod>2019-03-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

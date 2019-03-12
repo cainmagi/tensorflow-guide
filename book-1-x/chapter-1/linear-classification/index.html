@@ -10,7 +10,7 @@
       <meta name="viewport" content="width=device-width,initial-scale=1">
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
-        <meta name="description" content="本节介绍如何使用顺序模型(sequential model)来编写一个线性分类器，使用sigmoid函数激活，并验证其效果。">
+        <meta name="description" content="本节介绍如何使用顺序模型(sequential model)来编写一个线性分类器，使用sigmoid函数激活，并验证其效果。在本节我们将编写第一个Project，并介绍一些基本概念、和一个推荐的Tensorflow Project的编写格式。">
       
       
         <link rel="canonical" href="https://cainmagi.github.io/tensorflow-guide/book-1-x/chapter-1/linear-classification/">
@@ -549,6 +549,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../linear-regression/" title="线性回归" class="md-nav__link">
+      线性回归
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -758,7 +770,7 @@
                 <h1 id="_1">线性分类<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <div class="admonition abstract">
 <p class="admonition-title">摘要</p>
-<p>本节介绍如何使用顺序模型(sequential model)来编写一个线性分类器，使用sigmoid函数激活，并验证其效果。</p>
+<p>本节介绍如何使用顺序模型(sequential model)来编写一个线性分类器，使用sigmoid函数激活，并验证其效果。在本节我们将编写第一个Project，并介绍一些基本概念、和一个推荐的Tensorflow Project的编写格式。</p>
 </div>
 <h2 id="_2">理论<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <h3 id="_3">问题描述<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
@@ -806,6 +818,8 @@
 <p>其中<span><span class="MathJax_Preview">\boldsymbol{\varepsilon}</span><script type="math/tex">\boldsymbol{\varepsilon}</script></span>是一个定义噪声的向量。</p>
 <p>我们可以把向量<span><span class="MathJax_Preview">\mathbf{y}</span><script type="math/tex">\mathbf{y}</script></span>的元素看成是互不相关的多个超平面对向量<span><span class="MathJax_Preview">\mathbf{x}</span><script type="math/tex">\mathbf{x}</script></span>各自独立的分类结果。即<span><span class="MathJax_Preview">y_i = \{ \hat{y}_i&gt;0 ~ | ~ \hat{y}_i = \mathbf{a}_i^T \mathbf{x} + c_i + \varepsilon_i \}</span><script type="math/tex">y_i = \{ \hat{y}_i>0 ~ | ~ \hat{y}_i = \mathbf{a}_i^T \mathbf{x} + c_i + \varepsilon_i \}</script></span>。由于每个超平面构成一个二分类，如果把每个二分类看作是向量是否属于这个类的测度，那么<span><span class="MathJax_Preview">\mathbf{y}</span><script type="math/tex">\mathbf{y}</script></span>可以被看作是一个多分类的结果，尽管向量<span><span class="MathJax_Preview">\mathbf{x}</span><script type="math/tex">\mathbf{x}</script></span>可能被同时分入多个类中。</p>
 <p>假设我们的数据集<span><span class="MathJax_Preview">(\mathbf{x},~\mathbf{y}) \in \mathbb{D}</span><script type="math/tex">(\mathbf{x},~\mathbf{y}) \in \mathbb{D}</script></span>符合<a href="#mjx-eqn-3"><span><span class="MathJax_Preview">(3)</span><script type="math/tex">(3)</script></span></a>定义的数据分布特征。我们的基本要求是，在我们不知道<span><span class="MathJax_Preview">\mathbf{A},~\mathbf{c}</span><script type="math/tex">\mathbf{A},~\mathbf{c}</script></span>的情况下，使用大量<span><span class="MathJax_Preview">(\mathbf{x}^{(k)},~\mathbf{y}^{(k)}) \in \mathbb{D}</span><script type="math/tex">(\mathbf{x}^{(k)},~\mathbf{y}^{(k)}) \in \mathbb{D}</script></span>样本训练一个线性分类器，使得当我们给定任意一个新样本<span><span class="MathJax_Preview">\mathbf{x}</span><script type="math/tex">\mathbf{x}</script></span>的时候，分类器能推断出其对应的<span><span class="MathJax_Preview">\mathbf{y}</span><script type="math/tex">\mathbf{y}</script></span>来（亦即是否属于该分类）。</p>
+<details class="info" open="open"><summary>须知</summary><p>请注意我们在这里说到“线性分类器”，虽然使用“线性”一词，但准确来说，这是一个仿射变换。因为线性变换要求有齐次性，即<span><span class="MathJax_Preview">f(x) = \alpha f(x)</span><script type="math/tex">f(x) = \alpha f(x)</script></span>，但仿射变换允许我们引入一个平移向量<span><span class="MathJax_Preview">\mathbf{b}</span><script type="math/tex">\mathbf{b}</script></span>。当然，我们的求解的线性问题本身也是一个仿射变换。</p>
+</details>
 <p>在这个问题里，我们虽然不知道<span><span class="MathJax_Preview">\mathbf{A},~\mathbf{c}</span><script type="math/tex">\mathbf{A},~\mathbf{c}</script></span>，但我们知道由<a href="#mjx-eqn-3"><span><span class="MathJax_Preview">(3)</span><script type="math/tex">(3)</script></span></a>确定的线性关系，因此，我们可以随机生成一组<span><span class="MathJax_Preview">\mathbf{W},~\mathbf{b}</span><script type="math/tex">\mathbf{W},~\mathbf{b}</script></span>，构建线性模型：</p>
 <div class="overflow">\begin{align}
    \tilde{\mathbf{y}} = \sigma ( \mathbf{W} \mathbf{x} + \mathbf{b} ).
@@ -933,6 +947,7 @@
 </details>
 <p>实际情况下，我们使用<a href="#mjx-eqn-15"><span><span class="MathJax_Preview">(15)</span><script type="math/tex">(15)</script></span></a>来求取sigmoid函数激活下的交叉熵。</p>
 <h2 id="_7">解线性多分类问题<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>接下来，我们将开始实战上手，编写我们的第一个Project。虽然一个Project的格式并无定法，每个人按照自己的喜好会选择不同的风格，但一个从无受过训练的人，往往写出的Project几乎完全不具有可读性。实际上，学习任何语言，<span></span><em>变量命名规范</em><span></span>、<span></span><em>缩进规范</em><span></span>以及<span></span><em>模块化</em><span></span>、<span></span><em>面向对象</em><span></span>等都被认为是编写一个具有可读性的代码所不得不知的概念。本教程所推荐的代码格式，均具有统一的风格，读者在了解每个Project和其对应的教程时，会慢慢熟悉这种风格的特点。愿读者能从这样的风格中得到启发，得到<span></span><strong>代码可读性</strong><span></span>的神髓。</p>
 <h3 id="_8">代码规范<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <p>建立一个具有较强可读性的Tensorflow工程需要我们活用python的模块化设计。我们通常推荐以下的结构</p>
 <div class="codehilite"><pre><span></span>.
@@ -1145,7 +1160,7 @@
 </div>
 <p>我们随机生成了<span><span class="MathJax_Preview">\mathbf{x} \mapsto \mathbf{y}:~\mathbb{R}^{10} \mapsto \mathbb{R}^6</span><script type="math/tex">\mathbf{x} \mapsto \mathbf{y}:~\mathbb{R}^{10} \mapsto \mathbb{R}^6</script></span>的数据，每组数据100个，并且测试了10组。输出结果是各组测试中，<span><span class="MathJax_Preview">\mathbf{y}</span><script type="math/tex">\mathbf{y}</script></span>在对应维度上分类为1的概率估计。结果基本都在0.5左右，说明我们的这种数据生成模式产生的点能均匀分布在各个超平面两侧，适合进行后续测试。</p>
 <h3 id="_10">定义线性顺序模型<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
-<p><span></span><strong>顺序(sequential)</strong><span></span>模型是一个单输入单输出模型，网络结构较为简单，也不存在跨层短接（残差连接）。在大多数情况下，已经上手的Tensorflow用户不使用这个模型，故而作为我们入门的第一个project，我们姑且用之，但我们将不再使用顺序模型来实现后续的project。一个顺序模型大致可以描述为下图的模式：</p>
+<p><span></span><strong>顺序 (sequential)</strong><span></span>模型是一个单输入单输出模型，网络结构较为简单，也不存在跨层短接（残差连接）。在大多数情况下，已经上手的Tensorflow用户不使用这个模型，故而作为我们入门的第一个project，我们姑且用之，但我们将不再使用顺序模型来实现后续的project。一个顺序模型大致可以描述为下图的模式：</p>
 <div class="mermaid">graph LR
 st(输&lt;br/&gt;入) --&gt; l1[层&lt;br/&gt;1]
 l1 --&gt; l2[层&lt;br/&gt;2]
@@ -1360,7 +1375,7 @@ class st,ed styStart</div>
 <p>该函数返回预测结果。</p>
 </details>
 <h3 id="_14">调试<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
-<p>首先，训练网络。我们随机生成<span><span class="MathJax_Preview">\mathbf{x} \mapsto \mathbf{y}:~\mathbb{R}^{10} \mapsto \mathbb{R}^6</span><script type="math/tex">\mathbf{x} \mapsto \mathbf{y}:~\mathbb{R}^{10} \mapsto \mathbb{R}^6</script></span>的线性变换，并且设置好数据集，给定噪声扰动为<span><span class="MathJax_Preview">\boldsymbol{\varepsilon} \sim \mathcal{N}(0,1)^6</span><script type="math/tex">\boldsymbol{\varepsilon} \sim \mathcal{N}(0,1)^6</script></span>。设定20个epoch，每个epoch迭代500次，每次馈入32个样本构成的batch，然后开始训练：</p>
+<p>首先，训练网络。我们随机生成<span><span class="MathJax_Preview">\mathbf{x} \mapsto \mathbf{y}:~\mathbb{R}^{10} \mapsto \mathbb{R}^6</span><script type="math/tex">\mathbf{x} \mapsto \mathbf{y}:~\mathbb{R}^{10} \mapsto \mathbb{R}^6</script></span>的仿射变换，并且设置好数据集，给定噪声扰动为<span><span class="MathJax_Preview">\boldsymbol{\varepsilon} \sim \mathcal{N}(0,1)^6</span><script type="math/tex">\boldsymbol{\varepsilon} \sim \mathcal{N}(0,1)^6</script></span>。设定20个epoch，每个epoch迭代500次，每次馈入32个样本构成的batch，然后开始训练：</p>
 <div class="superfences-tabs">
 <input name="__tabs_7" type="radio" id="__tab_7_0" checked="checked" />
 <label for="__tab_7_0">lin-cls.py</label>
@@ -1580,13 +1595,13 @@ Evaluated accuracy <span class="o">(</span>metrics.BinaryAccuracy<span class="o"
           </a>
         
         
-          <a href="../../../release-notes/" title="更新记录" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../linear-regression/" title="线性回归" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   前进
                 </span>
-                更新记录
+                线性回归
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

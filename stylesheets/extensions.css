@@ -1,3 +1,19 @@
+/* float right */
+div .fl-right{
+  clear: right;
+  text-align: left;
+  float: right;
+}
+
+@media screen and (max-width: 600px) {
+  div .fl-right{
+      float: none;
+      margin-right: auto;
+      margin-left:auto;
+  }
+}
+
+/* Image box with shadow */
 a.boxedThumb {
     display:block;
     padding:4px;
@@ -29,14 +45,32 @@ a.boxedThumb:hover {
 }
 
 .superfences-content a.boxedThumb {
-  width: 50%;
+  width: fit-content;
+  max-height: 350px;
   min-width: 320px;
+  max-width: 80%;
+  text-align: center;
 }
 
+.superfences-content a.boxedThumb img {
+  max-height: 340px;
+}
+
+.superfences-content table a.boxedThumb {
+  max-width: auto;
+  min-width: 0;
+  max-height: auto;
+}
+.superfences-content table a.boxedThumb img {
+  max-height: auto;
+}
+
+/* Change code tab color */
 html .md-typeset .superfences-tabs>label:hover{
   color: #ff9100;
 }
 
+/* Progress bar */
 .progress-label {
   position: absolute;
   text-align: center;
@@ -104,6 +138,7 @@ html .md-typeset .superfences-tabs>label:hover{
   background-color: #f50057;
 }
 
+/* extensions */
 .md-typeset .admonition, .md-typeset details {
     font-size: .75rem
 }
@@ -112,6 +147,7 @@ html .md-typeset .superfences-tabs>label:hover{
   text-align: center;
 }
 
+/* with scroll bar */
 div .overflow {
   padding-top: 0;
   padding-bottom: 0;
@@ -129,6 +165,7 @@ div .overflow .check{
   overflow-y: hidden;
 }
 
+/* magic link */
 .md-typeset .magiclink-repository.magiclink-github:before {
   content: ""
 }
