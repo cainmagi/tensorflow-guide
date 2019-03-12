@@ -53,5 +53,14 @@ window.MathJax = {
     },
     displayAlign: "center",
     showProcessingMessages: false,
-    messageStyle: "none"
+    messageStyle: "none",
+    AuthorInit: function () {
+      MathJax.Hub.Register.StartupHook("Begin",function () {
+        MathJax.Hub.Queue(
+          ["Typeset",MathJax.Hub,"HTMLCSS-output"],
+          ["setRenderer",MathJax.Hub,"SVG"],
+          ["Typeset",MathJax.Hub,"SVG-output"]
+        )
+      });
+    }
   };
