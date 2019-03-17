@@ -2330,6 +2330,10 @@ Evaluated metric <span class="o">(</span>Pearson<span class="err">&#39;</span>s 
 </tbody>
 </table>
 <p>可见，我们的回归到的模型输出的频谱和真值的模型完全一致。</p>
+<details class="question" open="open"><summary>问题</summary><p><em>如果一个模型在频域上对一个信号的回归是精确的，是否在原域上（即时域）的回归也是精确的？</em></p>
+<p>正是如此。因为，考虑FFT的逆变换iFFT，作为一个线性变换，iFFT毫无疑问满足Lipschitz连续条件。这意味着，如果一个信号的在频域上的回归结果满足<span><span class="MathJax_Preview">\lVert \hat{\mathbf{Y}} - \mathbf{Y} \rVert &lt; \varepsilon</span><script type="math/tex">\lVert \hat{\mathbf{Y}} - \mathbf{Y} \rVert < \varepsilon</script></span>，则必有在时域上满足<span><span class="MathJax_Preview">\lVert \hat{\mathbf{y}} - \mathbf{y} \rVert &lt; C\varepsilon</span><script type="math/tex">\lVert \hat{\mathbf{y}} - \mathbf{y} \rVert < C\varepsilon</script></span>，其中<span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>是一个有限的常量。</p>
+<p>另一种思考方法是，iFFT和FFT互为逆变换，这说明这两者之间构成一一映射。如果两组信号的FFT相同，那么其对应的一一映射，iFFT，又或者说是原信号，是势必相同的。这意味着，如果一个模型能够在时域上回归到某组数据，那么其频域上也必然能回归到相同数据的频域表达，反之亦然。</p>
+</details>
 <p>最后，我们来观察三个参数向量的回归情况，比对不同测试回归到的参数向量和真值之间的差别，结果如下</p>
 <table>
 <thead>
