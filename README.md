@@ -1,11 +1,11 @@
 # 1-2: Linear Regression Test
 
-Linear classification demo for Tensroflow.
+Linear regression demo for Tensroflow.
 Use linear regression to learn the best W,b for
 
 y ~ W x + b.
 
-It contains two files:
+It contains four files:
 
 * `tools.py`: data post-processing codes.
 * `dparser.py`: data processor, which is used to pre-process the data.
@@ -71,6 +71,10 @@ where we set the learning rate, i.e. `-lr`(`--learningRate`) as 0.1. Then we set
     ```
 
 # Update records
+
+## 1.02 @ 03/17/2019
+
+Fix minor typos.
 
 ## 1.0 @ 03/12/2019
 
