@@ -11,6 +11,9 @@
 # Linear classification demo for Tensroflow.
 # Use linear regression to learn the best W,b for
 #    y ~ W x + b.
+# Version: 1.02 # 2019/3/17
+# Comments:
+#   Fix minor typos.
 # Version: 1.00 # 2019/3/12
 # Comments:
 #   Finish this project. Now it could train and 
@@ -110,7 +113,7 @@ if __name__ == '__main__':
             raise argparse.ArgumentTypeError('Unsupported value encountered.')
     
     parser = argparse.ArgumentParser(
-        description='A united version of several kinds of neural networks.',
+        description='Perform regression on a linear model.',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     
@@ -206,10 +209,6 @@ if __name__ == '__main__':
     print('Begin to train:')
     print('---------------')
     record = h.train(iter(dataSet))
-    
-    # Generate a group of testing samples:
-    dataSet.config(batch=args.testBatchNum)
-    x, y = next(dataSet)
     
     # Check the testing results
     print('Begin to test:')
