@@ -35,6 +35,7 @@ mermaid.initialize({
 
 // MathJax
 window.MathJax = {
+    jax: ["input/TeX","output/HTML-CSS"],
     tex2jax: {
       inlineMath: [ ["\\(","\\)"] ],
       displayMath: [ ["\\[","\\]"] ]
@@ -54,13 +55,4 @@ window.MathJax = {
     displayAlign: "center",
     showProcessingMessages: false,
     messageStyle: "none",
-    AuthorInit: function () {
-      MathJax.Hub.Register.StartupHook("Begin",function () {
-        MathJax.Hub.Queue(
-          ["Typeset",MathJax.Hub,"HTMLCSS-output"],
-          ["setRenderer",MathJax.Hub,"SVG"],
-          ["Typeset",MathJax.Hub,"SVG-output"]
-        )
-      });
-    }
   };

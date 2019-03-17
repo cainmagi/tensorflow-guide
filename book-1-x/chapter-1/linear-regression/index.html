@@ -608,6 +608,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../nonlinear-regression/" title="非线性回归" class="md-nav__link">
+      非线性回归
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -1093,7 +1105,7 @@
     \end{aligned}
 \end{equation}</div>
 
-<p>当收敛到最优解时，<span><span class="MathJax_Preview">\mathbf{v} \rightarrow 0</span><script type="math/tex">\mathbf{v} \rightarrow 0</script></span>，同时有<span><span class="MathJax_Preview">\boldsymbol{\Theta} + \alpha \mathbf{v} \rightarrow \boldsymbol{\Theta}</span><script type="math/tex">\boldsymbol{\Theta} + \alpha \mathbf{v} \rightarrow \boldsymbol{\Theta}</script></span>。我们在此不展开证明这个算法时能收敛的。但Nesterov的文献表明，它能将上面提到的带动量梯度下降算法的误差从<span><span class="MathJax_Preview">O\left(\frac{1}{K}\right)</span><script type="math/tex">O\left(\frac{1}{K}\right)</script></span>下降到<span><span class="MathJax_Preview">O\left(\frac{1}{K^2}\right)</span><script type="math/tex">O\left(\frac{1}{K^2}\right)</script></span>。其中<span><span class="MathJax_Preview">K</span><script type="math/tex">K</script></span>为迭代次数。下图展示了这种方法的改进原理。它的梯度是在更新动量的惯性部分之后才计算出来的，因此新的梯度和之前的惯性是首尾相接的。实际实现时，按照上面的算法，每次迭代需要更新两次参数，计算一次梯度。合理调整算法的计算次序，可以改进为每次迭代更新一次参数，计算一次梯度。</p>
+<p>当收敛到最优解时，<span><span class="MathJax_Preview">\mathbf{v} \rightarrow 0</span><script type="math/tex">\mathbf{v} \rightarrow 0</script></span>，同时有<span><span class="MathJax_Preview">\boldsymbol{\Theta} + \alpha \mathbf{v} \rightarrow \boldsymbol{\Theta}</span><script type="math/tex">\boldsymbol{\Theta} + \alpha \mathbf{v} \rightarrow \boldsymbol{\Theta}</script></span>。我们在此不展开证明这个算法是能收敛的。但Nesterov的文献表明，它能将上面提到的带动量梯度下降算法的误差从<span><span class="MathJax_Preview">O\left(\frac{1}{K}\right)</span><script type="math/tex">O\left(\frac{1}{K}\right)</script></span>下降到<span><span class="MathJax_Preview">O\left(\frac{1}{K^2}\right)</span><script type="math/tex">O\left(\frac{1}{K^2}\right)</script></span>。其中<span><span class="MathJax_Preview">K</span><script type="math/tex">K</script></span>为迭代次数。下图展示了这种方法的改进原理。它的梯度是在更新动量的惯性部分之后才计算出来的，因此新的梯度和之前的惯性是首尾相接的。实际实现时，按照上面的算法，每次迭代需要更新两次参数，计算一次梯度。合理调整算法的计算次序，可以改进为每次迭代更新一次参数，计算一次梯度。</p>
 <p><div style='margin:auto;width:70%'>
 <img alt="Nesterov动量的合理性" class="img-fluid" src="../../../assets/images/book-1-x/linreg-nest-moment-grad.png" tag="3" title="Nesterov动量的合理性 (图出典自<a href='http://ttic.uchicago.edu/~shubhendu/Pages/Files/Lecture6_pauses.pdf'><em>Optimization for Deep Neural Networks</em></a>)" />
 </div></p>
@@ -1281,7 +1293,7 @@
 
 <p>来将封装好的优化器API调用到主模块中。</p>
 <h3 id="argparse">项目选项：argparse<a class="headerlink" href="#argparse" title="Permanent link">&para;</a></h3>
-<p>本节将第一次引入<code>argparse</code>模块。该模块是python本身继承的原生模块，用来给代码提供启动选项。作为一个完整的Project，我们不希望为了调整参数而频繁地修改代码，因此<code>argparse</code>对我们是不可或缺的。在后面所有的Project中，我们都会通过<code>argparse</code>模块支持项目选项。<code>argparse</code>的官方文档可以在此查阅：</p>
+<p>本节将第一次引入<code>argparse</code>模块。该模块是python本身具有的原生模块，用来给代码提供启动选项。作为一个完整的Project，我们不希望为了调整参数而频繁地修改代码，因此<code>argparse</code>对我们是不可或缺的。在后面所有的Project中，我们都会通过<code>argparse</code>模块支持项目选项。<code>argparse</code>的官方文档可以在此查阅：</p>
 <p><a href="https://docs.python.org/3/library/argparse.html">argparse — Parser for command-line options, arguments and sub-commands</a></p>
 <p>调用<code>argparse</code>的一开始，我们需要定义如下内容：</p>
 <div class="superfences-tabs">
@@ -1460,7 +1472,7 @@ optional arguments:
 </pre></div>
 </td></tr></table></div>
 </div>
-<details class="tips" open="open"><summary>提示</summary><p>这里我们在没有噪声的情况下，仍然调用随机噪声函数，这是为了确保噪声函数被调用，使得随机数无论开关噪声，都能保持一致性。</p>
+<details class="tip" open="open"><summary>提示</summary><p>这里我们在没有噪声的情况下，仍然调用随机噪声函数，这是为了确保噪声函数被调用，使得随机数无论开关噪声，都能保持一致性。</p>
 </details>
 <p>该生成器同样是输入一组<span><span class="MathJax_Preview">\mathbf{A},~\mathbf{c}</span><script type="math/tex">\mathbf{A},~\mathbf{c}</script></span>，以及相关配置，之后就可以通过<span></span><strong>迭代器 (iterator)</strong><span></span>或<span></span><strong>方法 (method)</strong><span></span>随机生成数据。与上一节不同的是，我们在本节可以尝试更进一步，令<span><span class="MathJax_Preview">\mathbf{A}</span><script type="math/tex">\mathbf{A}</script></span>的<a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">SVD分解</a>写作如下形式</p>
 <div class="overflow">\begin{align}
@@ -1569,7 +1581,7 @@ class st1,ed1,st2,ed2,ed3 styStart</div>
 <p>首先，定义初始化方法：</p>
 <div class="superfences-tabs">
 <input name="__tabs_6" type="radio" id="__tab_6_0" checked="checked" />
-<label for="__tab_6_0">lin-cls.py: class LinClsHandle</label>
+<label for="__tab_6_0">lin-cls.py: class LinRegHandle</label>
 <div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1605,7 +1617,7 @@ class st1,ed1,st2,ed2,ed3 styStart</div>
 <p>接下来定义网络构造</p>
 <div class="superfences-tabs">
 <input name="__tabs_7" type="radio" id="__tab_7_0" checked="checked" />
-<label for="__tab_7_0">lin-cls.py: class LinClsHandle</label>
+<label for="__tab_7_0">lin-cls.py: class LinRegHandle</label>
 <div class="superfences-content"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span> 1
  2
  3
@@ -1667,13 +1679,14 @@ class st1,ed1,st2,ed2,ed3 styStart</div>
 </details>
 <p>与上一节不同的是，由于这是一个线性回归器，我们不给它提供激活函数。</p>
 <h4 id="_16">训练和测试方法<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h4>
-<p>类模型的<code>compile</code>、<code>fit</code>、<code>evaluate</code>、<code>predict</code>等API与顺序模型完全相同，详情请查看<a href="https://keras-zh.readthedocs.io/models/model/">Keras中文文档 - Model类 (函数式API)</a>。</p>
+<p>类模型的<code>compile</code>、<code>fit</code>、<code>evaluate</code>、<code>predict</code>等API与顺序模型完全相同，详情请查看：</p>
+<p><a href="https://keras-zh.readthedocs.io/models/model/">Model类 (函数式API) - Keras中文文档</a></p>
 <h3 id="_17">调试<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
 <p>上一节中，我们每次训练后，就当场显示分析结果。在本节中，我们会“再进一步”。即使用<code>tools.py</code>专门进行实验结果分析（后处理）。相对地，训练后，我们会讲<span></span><strong>原始输出 (raw output)</strong><span></span>保存到文件里。这是一种编写代码的思想，是为了便于我们批量分析测试数据。在后面的Project中，我们会看到，我们既会编写当场显示分析结果的测试代码，也会编写保存输出后使用<code>tools.py</code>分析的代码。究竟使用哪种方式分析数据，视具体情况而定。一般地，测试少量数据时，我们当场分析；批量测试大量数据时，或者需要比较不同选项（例如不同噪声）对结果的影响时，我们在<code>tools.py</code>中分析。本实验的情况属于后者。</p>
 <h4 id="_18">使实验结果可复现<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h4>
 <p>由于我们本次实验需要对比不同设置下的回归器性能，我们希望随机生成的矩阵<span><span class="MathJax_Preview">\mathbf{A}</span><script type="math/tex">\mathbf{A}</script></span>，向量<span><span class="MathJax_Preview">\mathbf{c}</span><script type="math/tex">\mathbf{c}</script></span>应当可复现；换言之，我们希望我们的结果是可复现的。</p>
 <p>关于这一问题，Keras的文档给出的建议可以在这里查阅：</p>
-<p><a href="https://keras-zh.readthedocs.io/getting-started/faq/#keras_5">如何在 Keras 开发过程中获取可复现的结果？</a></p>
+<p><a href="https://keras-zh.readthedocs.io/getting-started/faq/#keras_5">如何在 Keras 开发过程中获取可复现的结果？ - Keras中文文档</a></p>
 <p>我们只需要使<code>argparse</code>添加一个选项<code>-sd</code>(<code>--seed</code>)，并通过该选项控制：</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
@@ -2343,13 +2356,13 @@ Evaluated metric <span class="o">(</span>Pearson<span class="err">&#39;</span>s 
           </a>
         
         
-          <a href="../../../release-notes/" title="更新记录" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../nonlinear-regression/" title="非线性回归" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   前进
                 </span>
-                更新记录
+                非线性回归
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
