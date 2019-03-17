@@ -1,25 +1,31 @@
-# 1-2: Linear Regression Test
+# 1-3: Non-linear Regression Test
 
-Linear classification demo for Tensroflow.
-Use linear regression to learn the best W,b for
+Non-linear regression demo for Tensroflow.
+Use non-linear regression to learn the best w, p, a for
 
-y ~ W x + b.
+y ~ cos( x w^T + 1 p^T ) a,
 
-It contains two files:
+which could be also representes by
+
+y = sum [ a_i cos( w_i x + p_i ) ]
+
+It contains four files:
 
 * `tools.py`: data post-processing codes.
 * `dparser.py`: data processor, which is used to pre-process the data.
 * `extension.py`: a module for extending the Tensorflow lib.
-* `lin-reg.py`: the main module, where we define the network and need to include `dparser`, `extension` as the submodule.
+* `nonlin-reg.py`: the main module, where we define the network and need to include `dparser`, `extension` as the submodule.
 
-Check the theory and guide on [here](https://cainmagi.github.io/tensorflow-guide/book-1-x/chapter-1/linear-regression/)
+Check the theory and guide on [here](https://cainmagi.github.io/tensorflow-guide/book-1-x/chapter-1/nonlinear-regression/)
+
+Thanks [Radian ticks - matplotlib](https://matplotlib.org/gallery/units/radian_demo.html?highlight=radian%20ticks) for providing an external module to standard matplotlib.
 
 ## Usage
 
 Run this command to see the help:
 
 ```bash
-python lin-reg.py -h
+python nonlin-reg.py -h
 ```
 
 It supports user defined options.
@@ -29,13 +35,13 @@ It supports user defined options.
 To run the code, we just need to use 
 
 ```bash
-python lin-reg.py
+python nonlin-reg.py
 ```
 
 In detail, we could use such a command to specify more options:
 
 ```bash
-python lin-reg.py -lr 0.1 -e 30 -se 500 -tbn 32 -tsn 20
+python nonlin-reg.py -lr 0.1 -e 30 -se 500 -tbn 32 -tsn 20
 ```
 
 where we set the learning rate, i.e. `-lr`(`--learningRate`) as 0.1. Then we set the number of epochs `-e`(`--epoch`) as 30. In each epoch, we run 500 steps by specifying `-se`(`--steppe`). In each step, we use 32 samples as a batch (`-tbn`/`--trainBatchNum`). In testing phase, we generate one batch to test the results. This batch would contain `-tsn`(`--testBatchNum`), i.e. 20 samples.
@@ -58,10 +64,10 @@ where we set the learning rate, i.e. `-lr`(`--learningRate`) as 0.1. Then we set
     
     The option is caseless.
     
-3. Use `-is`(`--noise`) to define noise added to the labels. Here is the command:
+3. Use `-xl`(`--xLength`) to define the length of the random vector which is used as the input:
 
     ```bash
-    python lin-reg.py -is 2.5
+    python lin-reg.py -xl 1000
     ```
     
 4. Use `-sd`(`--seed`) to set the random seed for the experiment, this option would make the results reproductable. Here is the command:
@@ -72,10 +78,10 @@ where we set the learning rate, i.e. `-lr`(`--learningRate`) as 0.1. Then we set
 
 # Update records
 
-## 1.0 @ 03/12/2019
+## 1.0 @ 03/17/2019
 
-Finish this project. Now it could train and test with different options.
+Finish this project.
 
-## 0.5 @ 03/09/2019
+## 0.5 @ 03/15/2019
 
 Create this project.
