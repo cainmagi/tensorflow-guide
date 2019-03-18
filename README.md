@@ -51,7 +51,7 @@ where we set the learning rate, i.e. `-lr`(`--learningRate`) as 0.1. Then we set
 1. Use `-do`(`--outputData`) to define path and file name of the saved data. (do not need to add postfix)。 Here is the command:
 
     ```bash
-    python lin-reg.py -do test/algorithm/base
+    python nonlin-reg.py -do test/algorithm/base
     ```
     
     Would create `./test/algorithm/base.npz`.
@@ -59,7 +59,7 @@ where we set the learning rate, i.e. `-lr`(`--learningRate`) as 0.1. Then we set
 2. Use `-o`(`--optimizer`) to specify the name of the optimizer, we support `adam`, `amsgrad`, `adamax`, `nadam`(Nesterov Adam), `adadelta`, `rms`(RMSprop), `adagrad`, `nmoment` (Nesterov momentum), 'sgd' (stochastic gradient descent). Here is the command:
     
     ```bash
-    python lin-reg.py -o amsgrad
+    python nonlin-reg.py -o amsgrad
     ```
     
     The option is caseless.
@@ -67,13 +67,13 @@ where we set the learning rate, i.e. `-lr`(`--learningRate`) as 0.1. Then we set
 3. Use `-xl`(`--xLength`) to define the length of the random vector which is used as the input:
 
     ```bash
-    python lin-reg.py -xl 1000
+    python nonlin-reg.py -xl 1000
     ```
     
 4. Use `-sd`(`--seed`) to set the random seed for the experiment, this option would make the results reproductable. Here is the command:
 
     ```bash
-    python lin-reg.py -sd 1
+    python nonlin-reg.py -sd 1
     ```
 
 # Update records
